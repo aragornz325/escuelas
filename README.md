@@ -1,5 +1,42 @@
 # escuelas
 
+```plantuml
+@startuml
+allow_mixing
+entity Usuario {
+  * nombre
+  --
+  * mandatory_attribute
+  optional_attribute
+}
+
+
+entity Curso {
+  * pk: number<<generated>>
+  * nombre
+  --
+  * division
+  * anio lectivo
+  * anno domini
+  --
+  * alumnos[]
+  * materias[]
+}
+
+json ejemplo_curso {
+   "nombre":"Primero C",
+   "anio_lectivo":"1",
+   "division":"C",
+   "anno_domini":"2023"
+}
+Curso -- ejemplo_curso
+note on link
+ejemplo
+end note
+
+@enduml
+```
+
 
 
 ## Getting started
