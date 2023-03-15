@@ -29,7 +29,7 @@ entity Rol {
  * Role
 }
 
-json ejemplo_usuario:{
+json ejemplo_usuario {
   "nombre": "Carlos",
   "apellido": "Bala",
   "DNI": "10100110",
