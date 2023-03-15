@@ -62,6 +62,7 @@ json ejemplo_curso {
    "anno_domini":"2023"
 }
 
+Usuario }--{ Nota
 Asignatura ||--o{ Nota
 Curso ||--o{ Nota
 
