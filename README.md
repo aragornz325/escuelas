@@ -29,10 +29,6 @@ entity Rol {
  * Role
 }
 
-json ejemplo_rol {
-  "Role":"alumno"
-}
-
 json ejemplo_usuario:{
   "nombre": "Carlos",
   "apellido": "Bala",
