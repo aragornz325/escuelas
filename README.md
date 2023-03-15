@@ -17,11 +17,11 @@ entity Curso {
 entity Usuario {
   * pk: number<<generated>>
   * nombre: string
-  * apellido string
-  * dni string
-  * email string
-  * telefono string
-  * rol_id number<<FK>>
+  * apellido: string
+  * dni: string
+  * email: string
+  * telefono: string
+  * rol_id: number<<FK>>
 }
 
 entity Rol {
@@ -29,6 +29,18 @@ entity Rol {
  * Role
 }
 
+json ejemplo_rol {
+  "Role":"alumno"
+}
+
+json ejemplo_usuario:{
+  "nombre": "Carlos",
+  "apellido": "Bala",
+  "DNI": "10100110",
+  "email": "eaeapepe@quegustotienelasal.com",
+  "telefono": "+5491112121212",
+  "rol_id": 4
+}
 
 json ejemplo_curso {
    "nombre":"Primero C",
@@ -36,7 +48,10 @@ json ejemplo_curso {
    "division":"C",
    "anno_domini":"2023"
 }
+
+Rol -- ejemplo_rol
 Curso -- ejemplo_curso
+Usuario -- ejemplo_usuario
 note on link
 ejemplo
 end note
