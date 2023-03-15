@@ -23,6 +23,17 @@ entity Curso {
   * materias[]
 }
 
+entity Usuario {
+  * pk: number<<generated>>
+  * nombre
+  * apellido
+  * dni
+  * email
+  * telefono
+  * rol_id number<<FK>>
+}
+
+
 json ejemplo_curso {
    "nombre":"Primero C",
    "anio_lectivo":"1",
