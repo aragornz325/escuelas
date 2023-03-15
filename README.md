@@ -29,6 +29,23 @@ entity Rol {
  * Role
 }
 
+entity "Asignatura" {
+  * id_asignatura : int
+  --
+  * Asignatura : string
+}
+
+entity "Nota" {
+  * id_nota : int
+  --
+  * Asignatura : int
+  * Anio : int
+  * Curso : int
+  * Alumno : int
+  * Nota : int
+  * Docente : int
+}
+
 json ejemplo_usuario{
   "nombre": "Carlos",
   "apellido": "Bala",
