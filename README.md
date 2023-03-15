@@ -70,7 +70,6 @@ Rol ||--o{ Usuario
 Asignatura ||--o{ Nota
 Curso ||--o{ Nota
 
-Rol -- ejemplo_rol
 Curso -- ejemplo_curso
 Usuario -- ejemplo_usuario
 
