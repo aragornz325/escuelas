@@ -3,34 +3,30 @@
 ```plantuml
 @startuml
 allow_mixing
-entity Usuario {
-  * nombre
-  --
-  * mandatory_attribute
-  optional_attribute
-}
-
 
 entity Curso {
   * pk: number<<generated>>
   * nombre
-  --
   * division
   * anio lectivo
-  * anno domini
-  --
+  * anio calendario
   * alumnos[]
   * materias[]
 }
 
 entity Usuario {
   * pk: number<<generated>>
-  * nombre
-  * apellido
-  * dni
-  * email
-  * telefono
+  * nombre: string
+  * apellido string
+  * dni string
+  * email string
+  * telefono string
   * rol_id number<<FK>>
+}
+
+entity Rol {
+ * pk: number<<generated>>
+ * Role
 }
 
 
