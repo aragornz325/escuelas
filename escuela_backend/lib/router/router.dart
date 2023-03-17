@@ -9,7 +9,7 @@ class EscuelasRouter {
     final userController = UserController();
     final userRouter = UserRouter(userController);
 
-    _router.mount('/user', userRouter.router);
+    _router.mount('/users', userRouter.router);
     //_router.mount('/materias', materiasRouter.router);
     //_router.mount('/mailer', mailerRouter.router);
   }
