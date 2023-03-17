@@ -20,7 +20,7 @@ class UserController {
       final response =
           await userService.registerUser(email: email, password: password);
 
-      final encodeResponse = jsonEncode(response.toString());
+      final encodeResponse = jsonEncode(response);
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
@@ -36,7 +36,7 @@ class UserController {
 
       final response =
           await userService.login(email: email, password: password);
-      final encodeResponse = jsonEncode(response.toString());
+      final encodeResponse = jsonEncode(response);
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
