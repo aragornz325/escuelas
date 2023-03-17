@@ -6,7 +6,7 @@ class UserService {
   registerUser(
       {required String email,
       required String password,
-      required String role}) async {
+      required int role}) async {
     return await userRepository.registerUser(
         email: email, password: password, role: role);
   }

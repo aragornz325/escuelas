@@ -7,7 +7,7 @@ class UserRepository {
   registerUser(
       {required String email,
       required String password,
-      required String role}) async {
+      required int role}) async {
     try {
       final response = await client.auth
           .signUp(email, password, userMetadata: {"role": role});
