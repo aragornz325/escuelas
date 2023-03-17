@@ -86,6 +86,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "clock",
+      "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "code_builder",
       "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/code_builder-4.4.0",
       "packageUri": "lib/",
@@ -182,6 +188,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "io",
       "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/io-1.0.4",
       "packageUri": "lib/",
@@ -216,6 +228,12 @@
       "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/logging-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "mailer",
+      "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/mailer-6.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "matcher",
@@ -452,7 +470,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-03-17T19:12:44.471955Z",
+  "generated": "2023-03-17T19:39:58.462477Z",
   "generator": "pub",
   "generatorVersion": "2.19.4"
 }
