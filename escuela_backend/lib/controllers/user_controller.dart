@@ -16,9 +16,10 @@ class UserController {
       final json = request.context['body'] as Map<String, dynamic>;
       final email = json['email'];
       final password = json['password'];
+      final role = json['role'];
 
-      final response =
-          await userService.registerUser(email: email, password: password);
+      final response = await userService.registerUser(
+          email: email, password: password, role: role);
 
       final encodeResponse = jsonEncode(response);
       return Response.ok(encodeResponse,
