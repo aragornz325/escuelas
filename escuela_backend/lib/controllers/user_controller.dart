@@ -16,24 +16,32 @@ class UserController {
       final json = request.context['body'] as Map<String, dynamic>;
       final email = json['email'];
       final password = json['password'];
+      final role = json['role'];
 
-      final response =
-          await userService.registerUser(email: email, password: password);
+      final response = await userService.registerUser(
+          email: email, password: password, role: role);
 
-      final result = {
-        'access_token': response.data?.accessToken,
-        'refresh_token': response.data?.refreshToken,
-        'expires_at': response.data?.expiresAt?.toIso8601String(),
-        'user_id': response.data?.user?.id,
-        'user_email': response.data?.user?.email,
-        // Agrega otros campos relevantes del objeto GotrueSessionResponse aquí
-      };
-
-      final encodeResponse = jsonEncode(result);
+      final encodeResponse = jsonEncode(response);
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return Response.internalServerError(body: e.toString());
+      return e.toString();
+    }
+  }
+
+  login(Request request) async {
+    try {
+      final json = request.context['body'] as Map<String, dynamic>;
+      final email = json['email'];
+      final password = json['password'];
+
+      final response =
+          await userService.login(email: email, password: password);
+      final encodeResponse = jsonEncode(response);
+      return Response.ok(encodeResponse,
+          headers: {'content-type': 'application/json'});
+    } catch (e) {
+      return e.toString();
     }
   }
 }
