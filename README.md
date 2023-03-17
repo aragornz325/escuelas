@@ -5,31 +5,51 @@
 allow_mixing
 
 entity Curso {
-  * pk: number<<generated>>
-  * nombre
-  * division
-  * anio lectivo
-  * anio calendario
-  * alumnos[]
-  * materias[]
+  * id_curso : uuid <<generated>>
+  --
+  * curso : string
+  * division: string
+  * anio lectivo: int
+  * anio calendario : int
+  * alumnos : number[]
+  * materias : number[]
 }
 
 entity Usuario {
-  * pk: number<<generated>>
+  * id_usuario : uuid <<generated>>
+  --
   * nombre: string
   * apellido: string
-  * dni: string
+  * dni: int
   * email: string
   * telefono: string
-  * rol_id: number<<FK>>
+  * rol: int <<FK>>
 }
 
 entity Rol {
- * pk: number<<generated>>
- * Role
+ * id_rol: int <<generated>>
+ --
+ * rol : string
 }
 
-json ejemplo_usuario {
+entity "Asignatura" {
+  * id_asignatura : int <<generated>>
+  --
+  * asignatura : string
+}
+
+entity "Nota" {
+  * id_nota : uuid <<generated>>
+  --
+  * asignatura : int <<FK>>
+  * anio : int
+  * curso : int <<FK>>
+  * alumno : uuid <<FK>>
+  * nota : int
+  * docente : uuid <<FK>>
+}
+
+json ejemplo_usuario{
   "nombre": "Carlos",
   "apellido": "Bala",
   "DNI": "10100110",
@@ -45,12 +65,13 @@ json ejemplo_curso {
    "anno_domini":"2023"
 }
 
-Rol -- ejemplo_rol
+Usuario }--{ Nota
+Rol ||--o{ Usuario
+Asignatura ||--o{ Nota
+Curso ||--o{ Nota
+
 Curso -- ejemplo_curso
 Usuario -- ejemplo_usuario
-note on link
-ejemplo
-end note
 
 @enduml
 ```
