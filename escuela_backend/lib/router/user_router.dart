@@ -15,6 +15,10 @@ class UserRouter {
       return _userController.registerUser(request);
     });
 
+    router.post('/login', (Request request) {
+      return _userController.login(request);
+    });
+
     return router;
   }
 }
