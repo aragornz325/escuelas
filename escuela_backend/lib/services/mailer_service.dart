@@ -2,23 +2,29 @@ import 'dart:io';
 
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:dotenv/dotenv.dart';
 
-class mailer {
-  sendMailerFuncion(String ccRecipient,
-      {required String mailDestinatario, required String mailHtml}) async {
+final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
+
+class Mailer {
+  sendMailerFunction(
+      {required String mailDestinatario,
+      required String subject,
+      required String mailHtml}) async {
     //TODO: pasar a variables de entorno (dotenv)
-    String username = 'nidus.escuelas@gmail.com';
-    String password = 'uoqmujlachjpsxkt';
-    final finalccRecipients = ccRecipient ?? 'nidus.escuelas@gmail.com';
+    String username = dotEnv['GMAIL_EMAIL']!;
+    String password = dotEnv['GMAIL_PASSWORD']!;
 
     final smtpServer = gmail(username, password);
+
+    //final finalccRecipients = ccRecipient ?? 'nidus.escuelas@gmail.com';
 
     //TODO: crear mensaje con datos de la base de datos
     final message = Message()
       ..from = Address(username, 'Nidus Escuelas')
       ..recipients.add('$mailDestinatario')
-      ..ccRecipients.addAll(['$finalccRecipients'])
-      ..subject = 'Calificaciones !!! :: 😀 :: ${DateTime.now()}'
+      ..ccRecipients.addAll(['rodrigo.m.quintero@gmail.com'])
+      ..subject = ' $subject -  ${DateTime.now()}'
       ..html = mailHtml;
 
     // ..attachments = [
