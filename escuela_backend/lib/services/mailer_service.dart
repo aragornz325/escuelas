@@ -1,12 +1,13 @@
-import 'dart:io';
-
+import 'package:dotenv/dotenv.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
 main() async {
-  //TODO: pasar a variables de entorno (dotenv)
-  String username = 'nidus.escuelas@gmail.com';
-  String password = 'uoqmujlachjpsxkt';
+  
+  final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
+
+  String username = dotEnv['GMAIL_EMAIL']!;
+  String password = dotEnv['GMAIL_PASSWORD']!;
 
   final smtpServer = gmail(username, password);
 

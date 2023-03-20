@@ -146,6 +146,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "dotenv",
+      "rootUri": "file:///home/juan/.pub-cache/hosted/pub.dev/dotenv-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "file",
       "rootUri": "file:///home/juan/.pub-cache/hosted/pub.dev/file-6.1.4",
       "packageUri": "lib/",
@@ -500,7 +506,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-03-17T21:47:58.266792Z",
+  "generated": "2023-03-17T22:39:30.161492Z",
   "generator": "pub",
   "generatorVersion": "2.19.4"
 }
