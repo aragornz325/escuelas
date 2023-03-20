@@ -1,4 +1,5 @@
 import 'package:escuela_backend/repositories/user_repository.dart';
+import 'mailer_service.dart';
 
 class UserService {
   final userRepository = UserRepository();
