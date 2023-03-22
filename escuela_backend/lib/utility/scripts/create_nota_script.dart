@@ -1,56 +1,73 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:escuela_backend/utility/scripts/create_asignatura.dart';
 import 'package:supabase/supabase.dart';
 
 main(List<String> args) async {
   final client = SupabaseClient('https://rlsbqzngalrkrzijpnjy.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsc2Jxem5nYWxya3J6aWpwbmp5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3Mzc5ODM5NSwiZXhwIjoxOTg5Mzc0Mzk1fQ.1Z_7PSi0duNogmYUrvb7QfnJgtqt37A3qK6dYOCGTmk');
 
-  try {
-    //get all id alumnos
-    final alumnosResponse =
-        await client.from('Alumno').select('idAlumno').execute();
-    final alumnosid = alumnosResponse.data.map((e) => e['idAlumno']).toList();
-    final asignaturaResponse =
-        await client.from('Asignatura').select('idAsignatura').execute();
-    final asignaturaid =
-        asignaturaResponse.data.map((e) => e['idAsignatura']).toList();
-    final docenteResponse =
-        await client.from('Docente').select('idDocente').execute();
-    final docenteid = docenteResponse.data.map((e) => e['idDocente']).toList();
-    final divisionResponse =
-        await client.from('Division').select('idDivision').execute();
-    final divisionid =
-        divisionResponse.data.map((e) => e['idDivision']).toList();
-    final cursoResponse =
-        await client.from('Curso').select('idCurso').execute();
-    final cursoid = cursoResponse.data.map((e) => e['idCurso']).toList();
+  const String anioBusqueda = '6erAnio 2023';
+  const int periodo = 1;
 
-    List<Map<String, dynamic>> notaMapArray = [];
-    for (var i = 0; i < 300; i++) {
-      Map<String, dynamic> notaMap = {
-        "nota": Random().nextInt(10) + 1,
-        "idAlumno": alumnosid[Random().nextInt(alumnosid.length)],
-        "idDocente": docenteid[Random().nextInt(docenteid.length)],
-        "idCurso": cursoid[Random().nextInt(cursoid.length)],
-        "idAsignatura": asignaturaid[Random().nextInt(asignaturaid.length)],
-        "idDivision": divisionid[Random().nextInt(divisionid.length)],
-        "Periodo": 7,
-      };
+  // Obtener el ID del curso correspondiente según el año
+  final responseCurso = await client
+      .from('Curso')
+      .select('idCurso')
+      .eq('nombre', anioBusqueda)
+      .single()
+      .execute();
 
-      notaMapArray.add(notaMap);
+  final idCurso = responseCurso.data['idCurso'];
+
+  final cursoResponse = await client
+      .from('Curso')
+      .select('alumnos, asignaturas')
+      .eq('nombre', anioBusqueda)
+      .single() // Obtener la lista de alumnos y asignaturas correspondientes al curso
+      .execute();
+
+  final curso = cursoResponse.data;
+  final List notaBash = [];
+
+  // Iterar sobre cada alumno y asignatura del curso
+  for (final idAlumno in curso['alumnos']) {
+    for (final idAsignatura in curso['asignaturas']) {
+      final responseAsignatura = await client
+          .from('Asignatura')
+          .select('docente')
+          .eq('idAsignatura', idAsignatura)
+          .single()
+          .execute(); // Obtener la asignatura correspondiente
+
+      final asignatura = responseAsignatura.data;
+
+      final idDocente = asignatura['docente'];
+
+      final nota = Random().nextInt(10) + 1;
+
+      // Insertar la nota en la tabla de "notas"
+
+      notaBash.add(
+        {
+          'nota': nota,
+          'idAlumno': idAlumno,
+          'idDocente': idDocente,
+          'idCurso': idCurso,
+          'idAsignatura': idAsignatura,
+          'periodo': periodo,
+        },
+      );
     }
-
-    final response = await client.from('Nota').insert(notaMapArray).execute();
-    //if response.error exist imprim error
-    if (response.error != null) {
-      print(response.error);
-    } else {
-      print(response.data);
-    }
-
-    return 'Notas creadas';
-  } catch (e) {
-    print(e);
   }
+  final responseNota = await client
+      .from('Nota')
+      .insert(notaBash)
+      .execute(); // Insertar la nota en la tabla de "notas"
+
+  if (responseNota.error != null) {
+    print(responseNota.error!.message);
+  }
+  print(responseNota.data);
+  return 'all done';
 }
