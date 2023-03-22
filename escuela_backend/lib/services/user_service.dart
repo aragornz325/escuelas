@@ -4,7 +4,7 @@ import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 
 class UserService {
   final templates = Templates();
-  final mailer = Mailer();
+  final mailer = MailerService();
   final userRepository = UserRepository();
 
   registerUser(

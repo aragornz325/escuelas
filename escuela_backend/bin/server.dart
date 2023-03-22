@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'dart:convert';
 
+import 'package:dotenv/dotenv.dart';
 import 'package:escuela_backend/router/router.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:watcher/watcher.dart';
+import 'package:supabase/supabase.dart';
 
 void main(List<String> args) async {
   final escuelasRouter = EscuelasRouter();

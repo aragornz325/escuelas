@@ -12,7 +12,7 @@ main(List<String> args) async {
     // List<Map<String, String>> usuarios3 = [];
 
     // Generamos 150 usuarios con el email rodrigo.m.quintero@gmail.com
-    for (int i = 0; i < 150; i++) {
+    for (int i = 0; i < 30; i++) {
       String nombre = nombresHispanos[Random().nextInt(nombresHispanos.length)];
       String apellido =
           apellidosHispanos[Random().nextInt(apellidosHispanos.length)];
@@ -26,7 +26,7 @@ main(List<String> args) async {
     }
 
     // Generamos 150 usuarios con el email juanjgar998@gmail.com
-    for (int i = 0; i < 150; i++) {
+    for (int i = 0; i < 30; i++) {
       String nombre = nombresHispanos[Random().nextInt(nombresHispanos.length)];
       String apellido =
           apellidosHispanos[Random().nextInt(apellidosHispanos.length)];
@@ -40,7 +40,7 @@ main(List<String> args) async {
     }
 
     // Generamos 100 usuarios con el email lucas.olimpi@gmail.com
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 30; i++) {
       String nombre = nombresHispanos[Random().nextInt(nombresHispanos.length)];
       String apellido =
           apellidosHispanos[Random().nextInt(apellidosHispanos.length)];
@@ -53,20 +53,18 @@ main(List<String> args) async {
       usuarios.add(usuario);
     }
 
-    // Convertimos la lista de usuarios a formato JSON
+    final response = await client.from('Alumno').insert(usuarios).execute();
 
-    // Insertamos los usuarios en la base de datos
-
-    for (var i = 0; i < usuarios.length; i++) {
-      final response = await client.from('Alumno').insert([
-        {
-          'nombre': usuarios[i]['nombre'],
-          'apellido': usuarios[i]['apellido'],
-          'email': usuarios[i]['email'],
-        }
-      ]).execute();
-      print('create alumno $i');
-    }
+    // for (var i = 0; i < usuarios.length; i++) {
+    //   final response = await client.from('Alumno').insert([
+    //     {
+    //       'nombre': usuarios[i]['nombre'],
+    //       'apellido': usuarios[i]['apellido'],
+    //       'email': usuarios[i]['email'],
+    //     }
+    //   ]).execute();
+    //   print('create alumno $i');
+    // }
 
     return "Usuarios creados";
   } catch (e) {
