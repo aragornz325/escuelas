@@ -9,10 +9,23 @@ import 'package:shelf_router/shelf_router.dart';
 class MailerController {
   final mailerService = MailerService();
 
-  sendMail(Request request, id) async {
+  sendMailByDocente(Request request, id) async {
     try {
       final id = request.params['id'];
       final response = await mailerService.sendMailByDocente(idDocente: id!);
+
+      final encodeResponse = jsonEncode(response);
+      return Response.ok(encodeResponse,
+          headers: {'content-type': 'application/json'});
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  sendMailByCurso(Request request, id) async {
+    try {
+      final id = request.params['id'];
+      final response = await mailerService.sendMailByCurso(idCurso: id!);
 
       final encodeResponse = jsonEncode(response);
       return Response.ok(encodeResponse,

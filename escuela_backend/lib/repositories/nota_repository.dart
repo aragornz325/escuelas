@@ -10,9 +10,10 @@ class NotaRepository {
     final response = await client
         .from('Nota')
         .select(
-            'nota, Alumno:idAlumno(nombre, apellido, email), Asignatura:idAsignatura(nombre), Curso:idCurso(nombre), Division:idDivision(nombre)')
+            'nota, Alumno:idAlumno(nombre, apellido, email), Asignatura:idAsignatura(nombre), Curso:idCurso(nombre)')
         .eq('idDocente', idDocente)
         .execute();
+
     final notasByAlumno = <String, Map<String, dynamic>>{};
 
     for (final nota in response.data) {
@@ -30,7 +31,38 @@ class NotaRepository {
         ..['notas'].add({
           'asignatura': nota['Asignatura']['nombre'],
           'curso': nota['Curso']['nombre'],
-          'division': nota['Division']['nombre'],
+          'nota': nota['nota'],
+        });
+    }
+
+    return notasByAlumno.values.toList();
+  }
+
+  getNotasByCurso({required String idCurso}) async {
+    final response = await client
+        .from('Nota')
+        .select(
+            'nota, Alumno:idAlumno(nombre, apellido, email), Asignatura:idAsignatura(nombre), Curso:idCurso(nombre)')
+        .eq('idCurso', idCurso)
+        .execute();
+
+    final notasByAlumno = <String, Map<String, dynamic>>{};
+
+    for (final nota in response.data) {
+      final nombreAlumno = nota['Alumno']['nombre'] as String;
+
+      // ignore: avoid_single_cascade_in_expression_statements
+      notasByAlumno.putIfAbsent(
+          nombreAlumno,
+          () => {
+                'nombre': nombreAlumno,
+                'apellido': nota['Alumno']['apellido'],
+                'email': nota['Alumno']['email'],
+                'notas': [],
+              })
+        ..['notas'].add({
+          'asignatura': nota['Asignatura']['nombre'],
+          'curso': nota['Curso']['nombre'],
           'nota': nota['nota'],
         });
     }
