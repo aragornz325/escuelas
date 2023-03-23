@@ -17,22 +17,5 @@ class AsignaturaRepository extends Repository {
     return response.data[0];
   }
 
-  Future<Map> getCursoByAsignatura(idAsignatura) async {
-    final allCursos = await client.from('Curso').select().execute();
-    if (allCursos.error != null) {
-      throw Exception(allCursos.error!.message);
-    }
-    if (allCursos.data.isEmpty) {
-      throw Exception('no se encontro el curso');
-    }
-    final List cursosaFiltrar = allCursos.data;
-    final List curso = [];
-    cursosaFiltrar.forEach((element) {
-      if (element['asignaturas'].contains(idAsignatura)) {
-        curso.add(element);
-      }
-    });
-
-    return curso[0];
-  }
+  
 }
