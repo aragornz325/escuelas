@@ -39,7 +39,7 @@ class MailerService {
   }
 
   ///esta funcion envia el mail con las calificaciones de los alumnos por curso
-  ///recibe como parametro el id del curso
+  ///recibe como parametro el id del curso y algo mas
 
   Future<Map<String, String>> sendMailByCurso({
     required String idCurso,
