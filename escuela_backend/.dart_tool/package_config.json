@@ -441,7 +441,7 @@
     },
     {
       "name": "supabase",
-      "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/supabase-0.2.15",
+      "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/supabase-0.2.9",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -530,7 +530,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-03-23T12:27:35.324392Z",
+  "generated": "2023-03-23T13:38:12.418552Z",
   "generator": "pub",
   "generatorVersion": "2.19.4"
 }
