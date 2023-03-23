@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -11,7 +12,7 @@ import '../class/result.dart';
 class UserController {
   final userService = UserService();
 
-  registerUser(Request request) async {
+  Future<Response> registerUser(Request request) async {
     try {
       final json = request.context['body'] as Map<String, dynamic>;
       final email = json['email'];
@@ -25,11 +26,11 @@ class UserController {
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return e.toString();
+      return Response.badRequest(body: e.toString());
     }
   }
 
-  login(Request request) async {
+  Future<Response> login(Request request) async {
     try {
       final json = request.context['body'] as Map<String, dynamic>;
       final email = json['email'];
@@ -41,7 +42,7 @@ class UserController {
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return e.toString();
+      return Response.badRequest(body: e.toString());
     }
   }
 }

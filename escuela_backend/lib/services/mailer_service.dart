@@ -6,16 +6,22 @@ import 'package:dotenv/dotenv.dart';
 
 import 'package:escuela_backend/repositories/nota_repository.dart';
 
+import 'package:escuela_backend/utility/mailer/templates/templates.dart';
+
 final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
 
 class MailerService {
+  final templates = Templates();
   final notaRepository = NotaRepository();
-  sendMailByDocente({
+
+  Future<Map<String, String>> sendMailByDocente({
     required String idDocente,
   }) async {
     final List data =
         await notaRepository.getNotasByDocente(idDocente: idDocente);
-
+    if (data.isEmpty) {
+      throw Exception('No hay notas para enviar');
+    }
     data.forEach((element) async {
       final mailDestinatario = element['email'];
       final subject = 'Notas de ${element['nombre']} ${element['apellido']}';
@@ -32,23 +38,58 @@ class MailerService {
     return {'status': 'ok'};
   }
 
-  sendMailerFunction(
+  ///esta funcion envia el mail con las calificaciones de los alumnos por curso
+  ///recibe como parametro el id del curso
+
+  Future<Map<String, String>> sendMailByCurso({
+    required String idCurso,
+  }) async {
+    final List data = await notaRepository.getNotasByCurso(idCurso: idCurso);
+    if (data.isEmpty) {
+      throw Exception('No hay notas para enviar');
+    }
+    data.forEach((element) async {
+      final mailDestinatario = element['email'];
+      final subject =
+          'Notas de ${element['nombre']} ${element['apellido']} - curso: ${element['notas'][0]['curso']}';
+      final mailHtml =
+          '<h1>Notas de ${element['nombre']} ${element['apellido']}</h1>';
+      final listadoNotas = element['notas'].map((nota) {
+        return ' <tr> <td style="border: solid"> ${nota['asignatura']} </td>  <td style="border: solid"> ${nota['nota']}</td></tr>';
+      }).join();
+
+      final tableCalificaciones =
+          '<table style="cellpadding: 5px"> <thead> <tr> <td> ASIGNATURA </td> <td> NOTA</td>  <tr></thead> <tbody> <tr> $listadoNotas </tr></tbody> </table>';
+      final mailHtmlFinal = templates.mailcalificaciones(
+          nombre: element['nombre'],
+          apellido: element['apellido'],
+          tableCalificaciones: tableCalificaciones);
+
+      await sendMailerFunction(
+          mailDestinatario: mailDestinatario,
+          subject: subject,
+          mailHtml: mailHtmlFinal);
+    });
+    return {'status': 'ok'};
+  }
+
+  ///esta funcion envia el mail
+  ///crea la coneccion con el servidor de gmail
+  ///se le debe enviar el destinatario, el asunto y el cuerpo del mail
+  Future<Map<String, String>> sendMailerFunction(
       {required String mailDestinatario,
       required String subject,
       required String mailHtml}) async {
     //TODO: pasar a variables de entorno (dotenv)
     String username = dotEnv['GMAIL_EMAIL']!;
     String password = dotEnv['GMAIL_PASSWORD']!;
-
     final smtpServer = gmail(username, password);
-
     //final finalccRecipients = ccRecipient ?? 'nidus.escuelas@gmail.com';
-
     //TODO: crear mensaje con datos de la base de datos
     final message = Message()
       ..from = Address(username, 'Nidus Escuelas')
       ..recipients.add('$mailDestinatario')
-      ..ccRecipients.addAll(['rodrigo.m.quintero@gmail.com'])
+      //..ccRecipients.addAll(['rodrigo.m.quintero@gmail.com'])
       ..subject = ' $subject -  ${DateTime.now()}'
       ..html = mailHtml;
 
@@ -80,5 +121,6 @@ class MailerService {
 
     // close the connection
     await connection.close();
+    return {'status': 'ok'};
   }
 }
