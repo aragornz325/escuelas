@@ -12,9 +12,19 @@ class LinkController {
   Future<Response> sendLinkByAsignatura(Request request, id) async {
     try {
       final idAsignatura = request.params['idAsignatura'];
-      print('en el controller entrando al servicio');
       final response =
           await linkService.sendLinkCalificacion(idAsignatura: idAsignatura!);
+      final encodeResponsee = jsonEncode(response);
+      return Response.ok(encodeResponsee,
+          headers: {'content-type': 'application/json'});
+    } catch (e) {
+      return Response.badRequest(body: e.toString());
+    }
+  }
+
+  Future<Response> sendAlumnosByAsignatura(Request request, token) async {
+    try {
+      final response = await linkService.sendAlumnosByAsignatura(token);
       final encodeResponsee = jsonEncode(response);
       return Response.ok(encodeResponsee,
           headers: {'content-type': 'application/json'});

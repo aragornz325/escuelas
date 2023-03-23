@@ -12,8 +12,11 @@ class LinkRouter {
     final router = Router();
 
     router.post('/<idAsignatura>', (Request request, String idAsignatura) {
-      print('en el router entrando al controller');
       return _linkController.sendLinkByAsignatura(request, idAsignatura);
+    });
+
+    router.get('/<token>', (Request request, String token) {
+      return _linkController.sendAlumnosByAsignatura(request, token);
     });
 
     return router;

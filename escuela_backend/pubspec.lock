@@ -589,10 +589,10 @@ packages:
     dependency: "direct main"
     description:
       name: supabase
-      sha256: fc251ebb9887feaff5eb64796a18c5670b9f5dd4602835a9550364663d28ae6d
+      sha256: b86d561b0f548bd10671b4ceeea44e84084907e3de90f1aa3608f5820980c138
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.15"
+    version: "0.2.9"
   term_glyph:
     dependency: transitive
     description:

@@ -7,11 +7,29 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:escuela_backend/services/mailer_service.dart';
+import 'package:escuela_backend/repositories/alumnos_repository.dart';
 
 class LinkService {
   final templates = Templates();
   final mailerService = MailerService();
   final asignaturaRepository = AsignaturaRepository();
+  final alumnosRepository = AlumnoRepository();
+
+  Future<List> sendAlumnosByAsignatura(String token) async {
+    final jwtVerify = JWT.verify(token, SecretKey('unodoskey'));
+    if (jwtVerify == false) {
+      throw Exception('Token invalido');
+    }
+    final jwt = JWT.decode(token);
+
+    final cursoByAsignatura = await asignaturaRepository
+        .getCursoByAsignatura(jwt.payload['asignatura']);
+
+    final listaAlumnos =
+        await alumnosRepository.getAlumnosBash(cursoByAsignatura['alumnos']);
+
+    return listaAlumnos;
+  }
 
   final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
 
