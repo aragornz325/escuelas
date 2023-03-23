@@ -13,37 +13,41 @@ final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
 class MailerService {
   final templates = Templates();
   final notaRepository = NotaRepository();
-  sendMailByDocente({
+
+  Future<Map<String, String>> sendMailByDocente({
     required String idDocente,
   }) async {
     final List data =
         await notaRepository.getNotasByDocente(idDocente: idDocente);
-
-    print(data);
-
-    // data.forEach((element) async {
-    //   final mailDestinatario = element['email'];
-    //   final subject = 'Notas de ${element['nombre']} ${element['apellido']}';
-    //   final mailHtml =
-    //       '<h1>Notas de ${element['nombre']} ${element['apellido']}</h1>';
-    //   final listadoNotas = element['notas'].map((nota) {
-    //     return '<p>Asignatura: ${nota['asignatura']} - Curso: ${nota['curso']} - Division: ${nota['division']} - Nota: ${nota['nota']}</p>';
-    //   }).join();
-    //   await sendMailerFunction(
-    //       mailDestinatario: mailDestinatario,
-    //       subject: subject,
-    //       mailHtml: listadoNotas);
-    // });
-    return data;
+    if (data.isEmpty) {
+      throw Exception('No hay notas para enviar');
+    }
+    data.forEach((element) async {
+      final mailDestinatario = element['email'];
+      final subject = 'Notas de ${element['nombre']} ${element['apellido']}';
+      final mailHtml =
+          '<h1>Notas de ${element['nombre']} ${element['apellido']}</h1>';
+      final listadoNotas = element['notas'].map((nota) {
+        return '<p>Asignatura: ${nota['asignatura']} - Curso: ${nota['curso']} - Division: ${nota['division']} - Nota: ${nota['nota']}</p>';
+      }).join();
+      await sendMailerFunction(
+          mailDestinatario: mailDestinatario,
+          subject: subject,
+          mailHtml: listadoNotas);
+    });
+    return {'status': 'ok'};
   }
 
-  sendMailByCurso({
+  ///esta funcion envia el mail con las calificaciones de los alumnos por curso
+  ///recibe como parametro el id del curso
+
+  Future<Map<String, String>> sendMailByCurso({
     required String idCurso,
   }) async {
     final List data = await notaRepository.getNotasByCurso(idCurso: idCurso);
-
-    print(data);
-
+    if (data.isEmpty) {
+      throw Exception('No hay notas para enviar');
+    }
     data.forEach((element) async {
       final mailDestinatario = element['email'];
       final subject =
@@ -66,21 +70,21 @@ class MailerService {
           subject: subject,
           mailHtml: mailHtmlFinal);
     });
-    return data;
+    return {'status': 'ok'};
   }
 
-  sendMailerFunction(
+  ///esta funcion envia el mail
+  ///crea la coneccion con el servidor de gmail
+  ///se le debe enviar el destinatario, el asunto y el cuerpo del mail
+  Future<Map<String, String>> sendMailerFunction(
       {required String mailDestinatario,
       required String subject,
       required String mailHtml}) async {
     //TODO: pasar a variables de entorno (dotenv)
     String username = dotEnv['GMAIL_EMAIL']!;
     String password = dotEnv['GMAIL_PASSWORD']!;
-
     final smtpServer = gmail(username, password);
-
     //final finalccRecipients = ccRecipient ?? 'nidus.escuelas@gmail.com';
-
     //TODO: crear mensaje con datos de la base de datos
     final message = Message()
       ..from = Address(username, 'Nidus Escuelas')
@@ -117,5 +121,6 @@ class MailerService {
 
     // close the connection
     await connection.close();
+    return {'status': 'ok'};
   }
 }

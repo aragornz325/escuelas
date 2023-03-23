@@ -6,14 +6,16 @@ class NotaRepository {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsc2Jxem5nYWxya3J6aWpwbmp5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3Mzc5ODM5NSwiZXhwIjoxOTg5Mzc0Mzk1fQ.1Z_7PSi0duNogmYUrvb7QfnJgtqt37A3qK6dYOCGTmk');
 
   /// get notas by idDocente, populate with alumno and materia
-  getNotasByDocente({required String idDocente}) async {
+  Future<List<Map>> getNotasByDocente({required String idDocente}) async {
     final response = await client
         .from('Nota')
         .select(
             'nota, Alumno:idAlumno(nombre, apellido, email), Asignatura:idAsignatura(nombre), Curso:idCurso(nombre)')
         .eq('idDocente', idDocente)
         .execute();
-
+    if (response.error != null) {
+      throw Exception(response.error!.message);
+    }
     final notasByAlumno = <String, Map<String, dynamic>>{};
 
     for (final nota in response.data) {
@@ -38,14 +40,16 @@ class NotaRepository {
     return notasByAlumno.values.toList();
   }
 
-  getNotasByCurso({required String idCurso}) async {
+  Future<List<Map>> getNotasByCurso({required String idCurso}) async {
     final response = await client
         .from('Nota')
         .select(
             'nota, Alumno:idAlumno(nombre, apellido, email), Asignatura:idAsignatura(nombre), Curso:idCurso(nombre)')
         .eq('idCurso', idCurso)
         .execute();
-
+    if (response.error != null) {
+      throw Exception(response.error!.message);
+    }
     final notasByAlumno = <String, Map<String, dynamic>>{};
 
     for (final nota in response.data) {

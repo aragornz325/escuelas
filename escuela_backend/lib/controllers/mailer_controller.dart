@@ -9,7 +9,7 @@ import 'package:shelf_router/shelf_router.dart';
 class MailerController {
   final mailerService = MailerService();
 
-  sendMailByDocente(Request request, id) async {
+  Future<Response> sendMailByDocente(Request request, id) async {
     try {
       final id = request.params['id'];
       final response = await mailerService.sendMailByDocente(idDocente: id!);
@@ -18,11 +18,11 @@ class MailerController {
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return e.toString();
+      return Response.badRequest(body: e.toString());
     }
   }
 
-  sendMailByCurso(Request request, id) async {
+  Future<Response> sendMailByCurso(Request request, id) async {
     try {
       final id = request.params['id'];
       final response = await mailerService.sendMailByCurso(idCurso: id!);
@@ -31,7 +31,7 @@ class MailerController {
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return e.toString();
+      return Response.badRequest(body: e.toString());
     }
   }
 }
