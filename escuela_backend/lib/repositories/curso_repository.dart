@@ -80,7 +80,7 @@ class CursoRepository extends Repository {
     }
 
     final query = await client
-      .from('Curso_duplicate')
+      .from('Curso')
       .update(curso)
       .eq('idCurso', idCurso)
       .execute();
