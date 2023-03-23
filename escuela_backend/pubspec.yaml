@@ -15,6 +15,7 @@ dependencies:
   dart_mappable: ^2.0.3
   mailer: ^6.0.0
   dotenv: ^4.1.0
+  dart_jsonwebtoken: ^2.7.1
  
   
  
