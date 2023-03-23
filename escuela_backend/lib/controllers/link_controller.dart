@@ -15,8 +15,8 @@ class LinkController {
       print('en el controller entrando al servicio');
       final response =
           await linkService.sendLinkCalificacion(idAsignatura: idAsignatura!);
-      final encodeResponse = jsonEncode(response);
-      return Response.ok(encodeResponse,
+      final encodeResponsee = jsonEncode(response);
+      return Response.ok(encodeResponsee,
           headers: {'content-type': 'application/json'});
     } catch (e) {
       return Response.badRequest(body: e.toString());
