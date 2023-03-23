@@ -1,6 +1,7 @@
-import 'dart:async';
+import 'base_repository.dart';
 
-import 'package:supabase/supabase.dart';
-import 'dart:io';
+class LinkRepository extends Repository {
 
-class LinkRepository {}
+  
+
+}

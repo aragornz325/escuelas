@@ -2,18 +2,17 @@ import 'dart:io';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:dotenv/dotenv.dart';
-import 'package:escuela_backend/repositories/asignatura_repository.dart';
+import 'package:escuela_backend/repositories/repositories.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-
 import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:escuela_backend/services/mailer_service.dart';
-import 'package:escuela_backend/repositories/alumnos_repository.dart';
 
 class LinkService {
   final templates = Templates();
   final mailerService = MailerService();
-  final asignaturaRepository = AsignaturaRepository();
   final alumnosRepository = AlumnoRepository();
+  final asignaturaRepository = AsignaturaRepository();
+  final cursoRepository = CursoRepository();
 
   Future<List> sendAlumnosByAsignatura(String token) async {
     final jwtVerify = JWT.verify(token, SecretKey('unodoskey'));
@@ -22,7 +21,7 @@ class LinkService {
     }
     final jwt = JWT.decode(token);
 
-    final cursoByAsignatura = await asignaturaRepository
+    final cursoByAsignatura = await cursoRepository
         .getCursoByAsignatura(jwt.payload['asignatura']);
 
     final listaAlumnos =
