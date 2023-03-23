@@ -8,27 +8,35 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:escuela_backend/services/mailer_service.dart';
 import 'package:escuela_backend/repositories/alumnos_repository.dart';
+import 'package:escuela_backend/repositories/curso_repository.dart';
 
 class LinkService {
   final templates = Templates();
   final mailerService = MailerService();
   final asignaturaRepository = AsignaturaRepository();
   final alumnosRepository = AlumnoRepository();
+  final cursoRepository = CursoRepository();
 
-  Future<List> sendAlumnosByAsignatura(String token) async {
-    final jwtVerify = JWT.verify(token, SecretKey('unodoskey'));
+  Future<Map> sendAlumnosByAsignatura(String token) async {
+    final jwtVerify = JWT.verify(token, SecretKey(dotEnv['JWT_TOKEN']!));
     if (jwtVerify == false) {
       throw Exception('Token invalido');
     }
     final jwt = JWT.decode(token);
 
-    final cursoByAsignatura = await asignaturaRepository
-        .getCursoByAsignatura(jwt.payload['asignatura']);
+    final cursoByAsignatura =
+        await cursoRepository.getCursoByAsignatura(jwt.payload['asignatura']);
 
     final listaAlumnos =
         await alumnosRepository.getAlumnosBash(cursoByAsignatura['alumnos']);
 
-    return listaAlumnos;
+    return {
+      'idCurso': cursoByAsignatura['idCurso'],
+      'idDocente': jwt.payload['docente'],
+      'idAsignatura': jwt.payload['asignatura'],
+      'alumnos': listaAlumnos,
+      "alumnosCount": listaAlumnos.length
+    };
   }
 
   final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
@@ -46,8 +54,7 @@ class LinkService {
       "exp": DateTime.now().add(Duration(days: 2)).millisecondsSinceEpoch
     });
 
-    final token = jwt.sign(SecretKey(
-        dotEnv['JWT_TOKEN']!));
+    final token = jwt.sign(SecretKey(dotEnv['JWT_TOKEN']!));
 
     final html = templates.pedidoCalificaciones(
         nombre: asignatura['docente']['nombre'],
