@@ -9,17 +9,17 @@ import 'package:shelf_router/shelf_router.dart';
 class LinkController {
   final linkService = LinkService();
 
-  sendLinkByAsignatura(Request request, id) async {
+  Future<Response> sendLinkByAsignatura(Request request, id) async {
     try {
       final idAsignatura = request.params['idAsignatura'];
       print('en el controller entrando al servicio');
       final response =
           await linkService.sendLinkCalificacion(idAsignatura: idAsignatura!);
-      final encodeResponse = jsonEncode(response);
-      return Response.ok(encodeResponse,
+      final encodeResponsee = jsonEncode(response);
+      return Response.ok(encodeResponsee,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return e.toString();
+      return Response.badRequest(body: e.toString());
     }
   }
 }
