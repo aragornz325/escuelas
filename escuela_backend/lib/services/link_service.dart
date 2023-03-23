@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:escuela_backend/utility/mailer/templates/templates.dart';
-
+import 'package:dotenv/dotenv.dart';
 import 'package:escuela_backend/repositories/asignatura_repository.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
@@ -12,6 +12,8 @@ class LinkService {
   final templates = Templates();
   final mailerService = MailerService();
   final asignaturaRepository = AsignaturaRepository();
+
+  final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
 
   Future<Map<String, String>> sendLinkCalificacion(
       {required String idAsignatura}) async {
@@ -27,7 +29,7 @@ class LinkService {
     });
 
     final token = jwt.sign(SecretKey(
-        'unodoskey')); //TODO poner una key secreta como la gente y pasarla por el .env
+        dotEnv['JWT_TOKEN']!));
 
     final html = templates.pedidoCalificaciones(
         nombre: asignatura['docente']['nombre'],
