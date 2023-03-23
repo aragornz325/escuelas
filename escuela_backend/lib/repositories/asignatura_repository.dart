@@ -18,9 +18,4 @@ class AsignaturaRepository extends Repository {
     }
     return response.data[0];
   }
-<<<<<<< HEAD
-=======
-
-  
->>>>>>> main
 }
