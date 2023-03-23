@@ -3,14 +3,16 @@ import 'base_repository.dart';
 class NotaRepository extends Repository {
 
   /// get notas by idDocente, populate with alumno and materia
-  getNotasByDocente({required String idDocente}) async {
+  Future<List<Map>> getNotasByDocente({required String idDocente}) async {
     final response = await client
         .from('Nota')
         .select(
             'nota, Alumno:idAlumno(nombre, apellido, email), Asignatura:idAsignatura(nombre), Curso:idCurso(nombre)')
         .eq('idDocente', idDocente)
         .execute();
-
+    if (response.error != null) {
+      throw Exception(response.error!.message);
+    }
     final notasByAlumno = <String, Map<String, dynamic>>{};
 
     for (final nota in response.data) {
@@ -35,14 +37,16 @@ class NotaRepository extends Repository {
     return notasByAlumno.values.toList();
   }
 
-  getNotasByCurso({required String idCurso}) async {
+  Future<List<Map>> getNotasByCurso({required String idCurso}) async {
     final response = await client
         .from('Nota')
         .select(
             'nota, Alumno:idAlumno(nombre, apellido, email), Asignatura:idAsignatura(nombre), Curso:idCurso(nombre)')
         .eq('idCurso', idCurso)
         .execute();
-
+    if (response.error != null) {
+      throw Exception(response.error!.message);
+    }
     final notasByAlumno = <String, Map<String, dynamic>>{};
 
     for (final nota in response.data) {

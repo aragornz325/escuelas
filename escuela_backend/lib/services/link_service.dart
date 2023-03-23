@@ -12,9 +12,14 @@ class LinkService {
   final templates = Templates();
   final mailerService = MailerService();
   final asignaturaRepository = AsignaturaRepository();
-  sendLinkCalificacion({required String idAsignatura}) async {
+
+  Future<Map<String, String>> sendLinkCalificacion(
+      {required String idAsignatura}) async {
     final asignatura =
         await asignaturaRepository.getAsignaturaById(idAsignatura);
+    if (asignatura == null) {
+      throw Exception('No se encontro la asignatura');
+    }
     final jwt = JWT({
       "docente": asignatura['docente']['idDocente'],
       "asignatura": asignatura['idAsignatura'],
@@ -28,12 +33,14 @@ class LinkService {
         nombre: asignatura['docente']['nombre'],
         apellido: asignatura['docente']['apellido'],
         link: 'https://google.com/?token=$token');
-
+    if (html == null) {
+      throw Exception('No se pudo generar el html');
+    }
     final response = mailerService.sendMailerFunction(
         mailDestinatario: asignatura['docente']['email'],
         subject: 'pedido de calificaciones',
         mailHtml: html);
 
-    return {'mensaje': 'se envio el mail'};
+    return {'status': 'ok'};
   }
 }
