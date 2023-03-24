@@ -13,6 +13,11 @@ void main(List<String> args) async {
 
   final escuelasRouter = EscuelasRouter();
 
+  // Agregar ruta para el endpoint raíz
+  escuelasRouter.router.get('/', (Request request) {
+    return Response.ok('server running ok');
+  });
+
   final ip = InternetAddress.anyIPv4;
 
   // Configure a pipeline that logs requests.
