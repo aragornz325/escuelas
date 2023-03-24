@@ -2,7 +2,7 @@
 FROM dart:stable AS build
 
 # Resolve app dependencies.
-WORKDIR /app
+WORKDIR /escuela_backend
 COPY pubspec.* ./
 RUN dart pub get
 
@@ -15,7 +15,7 @@ RUN dart compile exe bin/server.dart -o bin/server
 # and the pre-built AOT-runtime in the `/runtime/` directory of the base image.
 FROM scratch
 COPY --from=build /runtime/ /
-COPY --from=build /app/bin/server /app/bin/
+COPY --from=build /escuela_backend/bin/server /escuela_backend/bin/
 
 # Start server.
 EXPOSE 8080
