@@ -1,4 +1,4 @@
-name: escuela_backend
+name: server
 description: A server app using the shelf package and Docker.
 version: 1.0.0
 # repository: https://github.com/my_org/my_repo
