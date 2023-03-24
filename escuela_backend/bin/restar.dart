@@ -6,7 +6,7 @@
 //       await Process.run('ps', ['-p', Process.pid.toString(), '-o', 'rss']);
 
 //   // Obtén el ID de proceso actual
-//   final pid = ProcessInfo.lookup(Process.pid).pid;
+//   final pid = ProcessInfo.current.pid;
 
 //   // Cierra el proceso actual
 //   await Process.run('kill', ['-9', pid.toString()]);
