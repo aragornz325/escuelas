@@ -1,12 +1,20 @@
 import 'package:escuela_backend/repositories/calificaciones_repository.dart';
 import 'package:escuela_backend/repositories/curso_repository.dart';
+import 'package:escuela_backend/services/link_service.dart';
 
 class CalificacionService {
-  final calificacionesRepository = CalificacionesRepository();
-  final cursoRepository = CursoRepository();
+  final _calificacionesRepository = CalificacionesRepository();
+  final _cursoRepository = CursoRepository();
+  final _linkService = LinkService();
   Future<Map> createCalificacionInBash({required payload}) async {
+    final checkNotasCargadas =
+        await _linkService.getLinkByToken(payload['token']);
+    if (checkNotasCargadas['notasCargadas']) {
+      throw Exception('Las notas ya fueron cargadas');
+    }
+
     final curso =
-        await cursoRepository.getCursoByAsignatura(payload['idAsignatura']);
+        await _cursoRepository.getCursoByAsignatura(payload['idAsignatura']);
     final alumnosToRepo = [];
     final alumnos = payload['calificaciones'];
     alumnos.forEach((alumno) {
@@ -19,8 +27,11 @@ class CalificacionService {
         'periodo': payload['periodo'],
       });
     });
-    final response = await calificacionesRepository.createCalificacionInBash(
+    final response = await _calificacionesRepository.createCalificacionInBash(
         alumnosConCalificaciones: alumnosToRepo);
+
+    final notasCargadas = true;
+    await _linkService.updatLinkRegister(payload['token'], notasCargadas);
     return {'status': 'ok'};
   }
 }

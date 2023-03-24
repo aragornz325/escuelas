@@ -12,13 +12,16 @@ class LinkController {
   Future<Response> sendLinkByAsignatura(Request request, id) async {
     try {
       final idAsignatura = request.params['idAsignatura'];
-      final response =
-          await linkService.sendLinkCalificacion(idAsignatura: idAsignatura!);
+      final now = DateTime.now();
+      final periodo =
+          request.url.queryParameters['periodo'] ?? '${now.month}/${now.year}';
+      final response = await linkService.sendLinkCalificacion(
+          idAsignatura: idAsignatura!, periodo: periodo);
       final encodeResponsee = jsonEncode(response);
       return Response.ok(encodeResponsee,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return Response.badRequest(body: e.toString());
+      return Response.badRequest(body: e.toString().split(':').last);
     }
   }
 
@@ -29,7 +32,7 @@ class LinkController {
       return Response.ok(encodeResponsee,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return Response.badRequest(body: e.toString());
+      return Response.badRequest(body: e.toString().split(':').last);
     }
   }
 }

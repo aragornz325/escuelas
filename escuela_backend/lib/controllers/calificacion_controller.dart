@@ -19,7 +19,7 @@ class CalificacionController {
       return Response.ok(encodeResponsee,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return Response.badRequest(body: e.toString());
+      return Response.badRequest(body: e.toString().split(':').last);
     }
   }
 }
