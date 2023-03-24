@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:dotenv/dotenv.dart';
-import 'package:escuela_backend/repositories/repositories.dart';
-import 'package:escuela_backend/router/router.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:watcher/watcher.dart';
+import 'package:shelf_helmet/shelf_helmet.dart';
+
+import 'package:escuela_backend/repositories/repositories.dart';
+import 'package:escuela_backend/router/router.dart';
 
 void main(List<String> args) async {
   final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
@@ -14,14 +16,16 @@ void main(List<String> args) async {
   final escuelasRouter = EscuelasRouter();
 
   // Agregar ruta para el endpoint raíz
+  final fecha = DateTime.now();
   escuelasRouter.router.get('/', (Request request) {
-    return Response.ok('server running ok');
+    return Response.ok('server running ok at $fecha');
   });
 
   final ip = InternetAddress.anyIPv4;
 
   // Configure a pipeline that logs requests.
   final handler = Pipeline()
+      .addMiddleware(helmet())
       .addMiddleware(logRequests())
       .addMiddleware((innerHandler) => (request) async {
             final contentType = request.headers['content-type'];
