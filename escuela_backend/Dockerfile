@@ -2,7 +2,7 @@
 FROM dart:stable AS build
 
 # Resolve app dependencies.
-WORKDIR /app
+WORKDIR /escuela_backend
 COPY pubspec.* ./
 RUN dart pub get
 
