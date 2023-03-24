@@ -524,13 +524,13 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "server",
+      "name": "escuela_backend",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     }
   ],
-  "generated": "2023-03-23T19:33:56.160619Z",
+  "generated": "2023-03-24T15:07:14.209563Z",
   "generator": "pub",
   "generatorVersion": "2.19.4"
 }
