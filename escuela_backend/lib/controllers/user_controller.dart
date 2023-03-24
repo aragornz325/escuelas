@@ -26,7 +26,7 @@ class UserController {
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return Response.badRequest(body: e.toString());
+      return Response.badRequest(body: e.toString().split(':').last);
     }
   }
 
@@ -42,7 +42,7 @@ class UserController {
       return Response.ok(encodeResponse,
           headers: {'content-type': 'application/json'});
     } catch (e) {
-      return Response.badRequest(body: e.toString());
+      return Response.badRequest(body: e.toString().split(':').last);
     }
   }
 }

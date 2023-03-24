@@ -11,14 +11,14 @@ import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
 
 class MailerService {
-  final templates = Templates();
-  final notaRepository = NotaRepository();
+  final _templates = Templates();
+  final _notaRepository = NotaRepository();
 
   Future<Map<String, String>> sendMailByDocente({
     required String idDocente,
   }) async {
     final List data =
-        await notaRepository.getNotasByDocente(idDocente: idDocente);
+        await _notaRepository.getNotasByDocente(idDocente: idDocente);
     if (data.isEmpty) {
       throw Exception('No hay notas para enviar');
     }
@@ -44,7 +44,7 @@ class MailerService {
   Future<Map<String, String>> sendMailByCurso({
     required String idCurso,
   }) async {
-    final List data = await notaRepository.getNotasByCurso(idCurso: idCurso);
+    final List data = await _notaRepository.getNotasByCurso(idCurso: idCurso);
     if (data.isEmpty) {
       throw Exception('No hay notas para enviar');
     }
@@ -60,7 +60,7 @@ class MailerService {
 
       final tableCalificaciones =
           '<table style="cellpadding: 5px"> <thead> <tr> <td> ASIGNATURA </td> <td> NOTA</td>  <tr></thead> <tbody> <tr> $listadoNotas </tr></tbody> </table>';
-      final mailHtmlFinal = templates.mailcalificaciones(
+      final mailHtmlFinal = _templates.mailcalificaciones(
           nombre: element['nombre'],
           apellido: element['apellido'],
           tableCalificaciones: tableCalificaciones);

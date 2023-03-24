@@ -1,18 +1,21 @@
 import 'dart:io';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:dotenv/dotenv.dart';
-import 'package:escuela_backend/repositories/repositories.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+
+import 'package:escuela_backend/utility/mailer/templates/templates.dart';
+import 'package:escuela_backend/repositories/repositories.dart';
 import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:escuela_backend/services/mailer_service.dart';
+import 'package:escuela_backend/repositories/link_repository.dart';
 
 class LinkService {
-  final templates = Templates();
-  final mailerService = MailerService();
-  final alumnosRepository = AlumnoRepository();
-  final asignaturaRepository = AsignaturaRepository();
-  final cursoRepository = CursoRepository();
+  final _templates = Templates();
+  final _mailerService = MailerService();
+  final _alumnosRepository = AlumnoRepository();
+  final _asignaturaRepository = AsignaturaRepository();
+  final _cursoRepository = CursoRepository();
+  final _linkRepository = LinkRepository();
 
   Future<Map> sendAlumnosByAsignatura(String token) async {
     final jwtVerify = JWT.verify(token, SecretKey(dotEnv['JWT_TOKEN']!));
@@ -22,10 +25,10 @@ class LinkService {
     final jwt = JWT.decode(token);
 
     final cursoByAsignatura =
-        await cursoRepository.getCursoByAsignatura(jwt.payload['asignatura']);
+        await _cursoRepository.getCursoByAsignatura(jwt.payload['asignatura']);
 
     final listaAlumnos =
-        await alumnosRepository.getAlumnosBash(cursoByAsignatura['alumnos']);
+        await _alumnosRepository.getAlumnosBash(cursoByAsignatura['alumnos']);
 
     return {
       'idCurso': cursoByAsignatura['idCurso'],
@@ -39,32 +42,60 @@ class LinkService {
   final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
 
   Future<Map<String, String>> sendLinkCalificacion(
-      {required String idAsignatura}) async {
+      {required String idAsignatura, required String periodo}) async {
     final asignatura =
-        await asignaturaRepository.getAsignaturaById(idAsignatura);
-    if (asignatura == null) {
-      throw Exception('No se encontro la asignatura');
+        await _asignaturaRepository.getAsignaturaById(idAsignatura);
+
+    final checkActivesLink = await _linkRepository.getLinkByDocenteAndPeriodo(
+        idDocente: asignatura['docente']['idDocente'], periodo: periodo);
+
+    if (checkActivesLink.isNotEmpty) {
+      throw Exception('Ya existe un link activo');
     }
     final jwt = JWT({
       "docente": asignatura['docente']['idDocente'],
       "asignatura": asignatura['idAsignatura'],
+      "periodo": periodo,
       "exp": DateTime.now().add(Duration(days: 2)).millisecondsSinceEpoch
     });
 
     final token = jwt.sign(SecretKey(dotEnv['JWT_TOKEN']!));
+    await _linkRepository.createLinkRegister(
+        token: token,
+        periodo: periodo,
+        idDocente: asignatura['docente']['idDocente']);
 
-    final html = templates.pedidoCalificaciones(
+    final html = _templates.pedidoCalificaciones(
         nombre: asignatura['docente']['nombre'],
         apellido: asignatura['docente']['apellido'],
         link: 'https://google.com/?token=$token');
     if (html == null) {
       throw Exception('No se pudo generar el html');
     }
-    final response = mailerService.sendMailerFunction(
+    _mailerService.sendMailerFunction(
         mailDestinatario: asignatura['docente']['email'],
         subject: 'pedido de calificaciones',
         mailHtml: html);
 
     return {'status': 'ok'};
+  }
+
+  Future<Map> updatLinkRegister(String token,
+      [bool? notasCargadas, bool? emailEnviado, bool? active]) async {
+    final registroOriginal = await _linkRepository.getLinkByToken(token);
+
+    final registro = {
+      'notasCargadas': notasCargadas ?? registroOriginal['notasCargadas'],
+      'emailEnviado': emailEnviado ?? registroOriginal['emailEnviado'],
+      'active': active ?? registroOriginal['active'],
+    };
+    await _linkRepository.updateLinkRegister(
+        registro: registro, idEnlace: registroOriginal['idEnlace']);
+    return {'status': 'ok'};
+  }
+
+  Future<Map> getLinkByToken(String token) async {
+    final registro = await _linkRepository.getLinkByToken(token);
+    return registro;
   }
 }
