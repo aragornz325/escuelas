@@ -28,8 +28,8 @@ class BotonConfirmar extends StatelessWidget {
       child: Container(
         decoration:
             BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(23))),
-        width: width!.pw,
-        height: height!.ph,
+        width: width ?? 150.pw,
+        height: height ?? 37.ph,
         //TODO: agregar las constantes cuando esten hechas
         color: datosCargados ? Color(0xff62B446) : Color(0xffC0C0C0),
         child: Center(

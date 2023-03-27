@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:full_responsive/full_responsive.dart';
 
 class BotonBorrarTodo extends StatelessWidget {
-  const BotonBorrarTodo({
+  BotonBorrarTodo({
     super.key,
     required this.onTap,
     this.height = 37,
@@ -28,8 +28,8 @@ class BotonBorrarTodo extends StatelessWidget {
       child: Container(
         decoration:
             BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(23))),
-        width: width!.pw,
-        height: height!.ph,
+        width: width ?? 150.pw,
+        height: height ?? 37.ph,
         //TODO: agregar las constantes cuando esten hechas
         color: datosCargados ? Color(0xffFF4444) : Color(0xffC0C0C0),
         child: Center(
