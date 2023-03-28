@@ -16,15 +16,12 @@ class AlumnoModel with AlumnoModelMappable {
   bool? egresado;
 
   // Version del modelo para creacion.
-  @MappableConstructor()
   AlumnoModel.create(this.nombre, this.apellido, this.email, this.curso);
 
   // Version del modelo para recuperar informacion.
-  @MappableConstructor()
   AlumnoModel.get(this.idAlumno, this.createdAt, this.nombre, this.apellido, this.email, this.curso, this.egresado);
 
   // Version del modelo para actualizacion.
-  @MappableConstructor()
   AlumnoModel.update(this.nombre, this.apellido, this.email, this.curso);
 
 }
