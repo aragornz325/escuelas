@@ -266,6 +266,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "logger",
+      "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/logger-1.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "logging",
       "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/logging-1.1.1",
       "packageUri": "lib/",
@@ -536,7 +542,7 @@
       "languageVersion": "2.14"
     }
   ],
-  "generated": "2023-03-24T20:05:52.847856Z",
+  "generated": "2023-03-28T12:01:48.934276Z",
   "generator": "pub",
-  "generatorVersion": "2.19.4"
+  "generatorVersion": "2.19.5"
 }
