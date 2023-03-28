@@ -31,7 +31,7 @@ class EscuelaAlertDialogConfirmar extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                '¿Deseas coninuar?',
+                '¿Deseas continuar?',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 15.pf,

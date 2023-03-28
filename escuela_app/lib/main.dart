@@ -18,10 +18,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: fuenteGeneral.fontFamily),
       home: const PageProfesor(),
-
-      // builder: (context, child) {
-      //   return const PageProfesor() ;
-      // },
     );
   }
 }
