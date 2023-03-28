@@ -73,7 +73,15 @@ class _ViewProfesorState extends State<ViewProfesor> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BotonBorrarTodo(onTap: () {}, datosCargados: true),
-                BotonConfirmar(datosCargados: true, onTap: () {}),
+                BotonConfirmar(
+                  datosCargados: true,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => EscuelaAlertDialogConfirmar(),
+                    );
+                  },
+                ),
               ],
             )
           ],
