@@ -53,9 +53,6 @@ class _ViewProfesorState extends State<ViewProfesor> {
                   style: TextStyle(
                       fontSize: 13.pf, color: const Color(0xff6D6D6D)),
                 ),
-                // SizedBox(
-                //   width: 160.pw,
-                // ),
                 Text(
                   'Nota',
                   style: TextStyle(
@@ -75,15 +72,18 @@ class _ViewProfesorState extends State<ViewProfesor> {
                 BotonBorrarTodo(onTap: () {}, datosCargados: true),
                 BotonConfirmar(
                   datosCargados: true,
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => EscuelaAlertDialogConfirmar(),
-                    );
-                  },
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => EscuelaAlertDialogConfirmar(
+                      //todo:(matias):Mandar todo al back
+                      ontap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
