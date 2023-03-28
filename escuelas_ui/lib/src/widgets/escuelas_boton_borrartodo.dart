@@ -1,3 +1,4 @@
+import 'package:escuelas_ui/escuelas_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'package:full_responsive/full_responsive.dart';
@@ -27,13 +28,12 @@ class BotonBorrarTodo extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(23)),
-          color: datosCargados ? Color(0xffFF4444) : Color(0xffC0C0C0),
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(23)),
+            color: datosCargados
+                ? EscuelasColor.borrar
+                : EscuelasColor.inhabilitado),
         width: width ?? 150.pw,
         height: height ?? 37.ph,
-        //TODO: agregar las constantes cuando esten hechas
-
         child: Center(
           child: Text(
             'BORRAR TODO',

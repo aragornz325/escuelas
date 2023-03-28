@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:full_responsive/full_responsive.dart';
 
+import '../../escuelas_ui.dart';
+
 class BotonConfirmar extends StatelessWidget {
   const BotonConfirmar({
     super.key,
@@ -27,13 +29,12 @@ class BotonConfirmar extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(23)),
-          color: datosCargados ? Color(0xff62B446) : Color(0xffC0C0C0),
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(23)),
+            color: datosCargados
+                ? EscuelasColor.confirmar
+                : EscuelasColor.inhabilitado),
         width: width ?? 150.pw,
         height: height ?? 37.ph,
-        //TODO: agregar las constantes cuando esten hechas
-
         child: Center(
           child: Text(
             'CONFIRMAR',
