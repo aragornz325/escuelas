@@ -18,6 +18,8 @@ dependencies:
   #Carpetas de capas
   full_responsive:
     path: packages/full_responsive
+  escuelas_ui:
+    path: ../escuelas_ui
 
 # Dependencias que no están disponibles para el código en la aplicación resultante
 dev_dependencies:
