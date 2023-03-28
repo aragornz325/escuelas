@@ -22,6 +22,6 @@ class AlumnoModel with AlumnoModelMappable {
   AlumnoModel.get(this.idAlumno, this.createdAt, this.nombre, this.apellido, this.email, this.curso, this.egresado);
 
   // Version del modelo para actualizacion.
-  AlumnoModel.update(this.nombre, this.apellido, this.email, this.curso);
+  AlumnoModel.update(this.nombre, this.apellido, this.email, this.curso, this.egresado);
 
 }
