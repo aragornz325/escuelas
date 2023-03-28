@@ -26,16 +26,18 @@ class BotonConfirmar extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(23))),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(23)),
+          color: datosCargados ? Color(0xff62B446) : Color(0xffC0C0C0),
+        ),
         width: width ?? 150.pw,
         height: height ?? 37.ph,
         //TODO: agregar las constantes cuando esten hechas
-        color: datosCargados ? Color(0xff62B446) : Color(0xffC0C0C0),
+
         child: Center(
           child: Text(
             'CONFIRMAR',
-            style: TextStyle(fontSize: 14.pf),
+            style: TextStyle(fontSize: 14.pf, color: Colors.white),
           ),
         ),
       ),
