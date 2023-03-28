@@ -19,6 +19,10 @@ class MailerRouter {
       return _mailerController.sendMailByCurso(request, id);
     });
 
+    router.post('/byperiodo/<periodo>', (Request request, String id) {
+      return _mailerController.sendMailByPeriodo(request, id);
+    });
+
     return router;
   }
 }
