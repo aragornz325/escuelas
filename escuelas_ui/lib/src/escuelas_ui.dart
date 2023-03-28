@@ -1,0 +1,3 @@
+class EscuelasUi {
+  const EscuelasUi();
+}
