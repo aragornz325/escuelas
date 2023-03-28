@@ -28,14 +28,12 @@ class BotonBorrarTodo extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(23)),
-          color:
-              datosCargados ? EscuelasColor.borrar : EscuelasColor.inhabilitado,
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(23)),
+            color: datosCargados
+                ? EscuelasColor.borrar
+                : EscuelasColor.inhabilitado),
         width: width ?? 150.pw,
         height: height ?? 37.ph,
-        //TODO: agregar las constantes cuando esten hechas
-
         child: Center(
           child: Text(
             'BORRAR TODO',
