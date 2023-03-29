@@ -13,8 +13,6 @@ import 'package:escuela_backend/router/router.dart';
 final logger = Logger();
 void main(List<String> args) async {
   final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
-  final envFile = args.isNotEmpty ? '.env.${args[0]}' : '.env.dev';
-  dotEnv.load([envFile]);
 
   final escuelasRouter = EscuelasRouter();
 
