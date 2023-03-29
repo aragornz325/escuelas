@@ -11,6 +11,10 @@ class MailerRouter {
   Router get router {
     final router = Router();
 
+    router.post('/byperiodo', (Request request) {
+      return _mailerController.sendMailByPeriodo(request);
+    });
+
     router.post('/bydocente/<id>', (Request request, String id) {
       return _mailerController.sendMailByDocente(request, id);
     });

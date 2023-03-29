@@ -1,6 +1,7 @@
 import 'package:escuela_backend/repositories/user_repository.dart';
 import 'package:escuela_backend/services/mailer_service.dart';
 import 'package:escuela_backend/utility/mailer/templates/templates.dart';
+import 'package:escuela_backend/utility/mailer/mail.dart';
 
 class UserService {
   final _templates = Templates();
@@ -15,7 +16,7 @@ class UserService {
         email: email, password: password, role: role);
     final mailHtml = await _templates.mailRegister(userName: email);
 
-    _mailer.sendMailerFunction(
+    sendMailerFunction(
         subject: "registro completo",
         mailDestinatario: email,
         mailHtml: mailHtml);

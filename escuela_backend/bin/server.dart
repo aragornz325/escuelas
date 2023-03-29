@@ -1,25 +1,30 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:dotenv/dotenv.dart' show DotEnv;
-import 'package:escuela_backend/repositories/repositories.dart';
-import 'package:escuela_backend/router/router.dart';
-import 'package:escuela_backend/services/mailer_service.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:watcher/watcher.dart';
+import 'package:logger/logger.dart';
 
+import 'package:escuela_backend/utility/logger_middleware.dart';
+import 'package:escuela_backend/repositories/repositories.dart';
+import 'package:escuela_backend/router/router.dart';
+
+final logger = Logger();
 void main(List<String> args) async {
   final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
-  final envFile = args.isNotEmpty ? '.env.${args[0]}' : '.env';
+  final envFile = args.isNotEmpty ? '.env.${args[0]}' : '.env.dev';
   dotEnv.load([envFile]);
 
   final escuelasRouter = EscuelasRouter();
 
+  final date = DateTime.now();
+  final enviroment = dotEnv['ENVIROMENT'];
   // Agregar ruta para el endpoint raíz
 
   escuelasRouter.router.get('/', (Request request) {
-    return Response.ok('server running ok');
+    return Response.ok('server running ok at $date, enviroment: $enviroment');
   });
 
   final ip = InternetAddress.anyIPv4;
@@ -47,6 +52,10 @@ void main(List<String> args) async {
   );
 
   var server = await serve(handler, ip, port);
+  if (enviroment == 'prod') {
+    print(
+        'be careful, you are in production mode \nbe extremely careful with the execution of the script, \nthe database can break catastrophically!');
+  }
   print('Server listening on port ${server.port}');
 
   final directory = Directory('.');

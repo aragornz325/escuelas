@@ -1,0 +1,45 @@
+name: escuelas
+description: Aplicacion de gestion de alumnos.
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0-186.0.dev <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  #De diseño
+  google_fonts: ^4.0.1
+  cupertino_icons: ^1.0.2
+
+  #Carpetas de capas
+  full_responsive:
+    path: packages/full_responsive
+  escuelas_ui:
+    path: ../escuelas_ui
+
+# Dependencias que no están disponibles para el código en la aplicación resultante
+dev_dependencies:
+  build_runner: ^2.3.0 
+  flutter_test:
+    sdk: flutter
+  
+
+
+  
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+
+full_responsive:
+# Defini la resolucion global que sera utilizada
+  resolutions:
+    - name: "mobile"
+      width: 375
+      height: 667
+  

@@ -9,6 +9,8 @@ import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:escuela_backend/services/mailer_service.dart';
 import 'package:escuela_backend/repositories/link_repository.dart';
 
+import '../utility/mailer/mail.dart';
+
 class LinkService {
   final _templates = Templates();
   final _mailerService = MailerService();
@@ -41,13 +43,18 @@ class LinkService {
 
   final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
 
+  //esta funcion crea un enlace de pedido de calificaciones por asignatura
+  //recibe un Id de asignatura
   Future<Map<String, String>> sendLinkCalificacion(
       {required String idAsignatura, required String periodo}) async {
     final asignatura =
         await _asignaturaRepository.getAsignaturaById(idAsignatura);
 
-    final checkActivesLink = await _linkRepository.getLinkByDocenteAndPeriodo(
-        idDocente: asignatura['docente']['idDocente'], periodo: periodo);
+    final checkActivesLink =
+        await _linkRepository.getLinkByDocenteAndPeriodoAndAsignatura(
+            idDocente: asignatura['docente']['idDocente'],
+            periodo: periodo,
+            idAsignatura: asignatura['idAsignatura']);
 
     if (checkActivesLink.isNotEmpty) {
       throw Exception('Ya existe un link activo');
@@ -63,16 +70,17 @@ class LinkService {
     await _linkRepository.createLinkRegister(
         token: token,
         periodo: periodo,
+        idAsignatura: asignatura['idAsignatura'],
         idDocente: asignatura['docente']['idDocente']);
 
     final html = _templates.pedidoCalificaciones(
         nombre: asignatura['docente']['nombre'],
         apellido: asignatura['docente']['apellido'],
-        link: 'https://google.com/?token=$token');
+        link: 'https://escuelas-production.up.railway.app/api/link/$token');
     if (html == null) {
       throw Exception('No se pudo generar el html');
     }
-    _mailerService.sendMailerFunction(
+    sendMailerFunction(
         mailDestinatario: asignatura['docente']['email'],
         subject: 'pedido de calificaciones',
         mailHtml: html);
@@ -97,5 +105,10 @@ class LinkService {
   Future<Map> getLinkByToken(String token) async {
     final registro = await _linkRepository.getLinkByToken(token);
     return registro;
+  }
+
+  Future<List> getLinksByPeriodo(String periodo) async {
+    final registros = await _linkRepository.getLinksByPeriodo(periodo);
+    return registros;
   }
 }

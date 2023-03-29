@@ -34,4 +34,17 @@ class MailerController {
       return Response.badRequest(body: e.toString().split(':').last);
     }
   }
+
+  Future<Response> sendMailByPeriodo(Request request) async {
+    try {
+      final periodo = request.url.queryParameters['periodo'];
+      final response = await mailerService.sendMailByPeriodo(periodo: periodo!);
+
+      final encodeResponse = jsonEncode(response);
+      return Response.ok(encodeResponse,
+          headers: {'content-type': 'application/json'});
+    } catch (e) {
+      return Response.badRequest(body: e.toString().split(':').last);
+    }
+  }
 }
