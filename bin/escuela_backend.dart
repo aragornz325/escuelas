@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:dotenv/dotenv.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:watcher/watcher.dart';
@@ -10,6 +11,7 @@ import 'package:escuela_backend/utility/supabase/client_supabase.dart';
 import 'package:escuela_backend/router/router.dart';
 
 void main(List<String> args) async {
+  final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
   final escuelasRouter = EscuelasRouter();
 
   // Agregar ruta para el endpoint raíz
