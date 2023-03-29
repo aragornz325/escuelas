@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_responsive/full_responsive.dart';
+import 'package:escuelas_ui/escuelas_ui.dart';
 
 class PageProfesor extends StatelessWidget {
   const PageProfesor({super.key});
@@ -35,7 +36,7 @@ class _ViewProfesorState extends State<ViewProfesor> {
                       fontSize: 24.pf, color: const Color(0xff1e1e1e)),
                 ),
                 Text(
-                  '1EROA',
+                  '1ERO A',
                   style: TextStyle(
                       fontSize: 24.pf, color: const Color(0xff6D6D6D)),
                 ),
@@ -45,14 +46,12 @@ class _ViewProfesorState extends State<ViewProfesor> {
               height: 20.ph,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Nombre del alumno/a',
                   style: TextStyle(
                       fontSize: 13.pf, color: const Color(0xff6D6D6D)),
-                ),
-                SizedBox(
-                  width: 160.pw,
                 ),
                 Text(
                   'Nota',
@@ -70,10 +69,21 @@ class _ViewProfesorState extends State<ViewProfesor> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(onPressed: () {}, child: Text('Borrar todo')),
-                TextButton(onPressed: () {}, child: Text('Confirmar'))
+                BotonBorrarTodo(onTap: () {}, datosCargados: true),
+                BotonConfirmar(
+                  datosCargados: true,
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => EscuelaAlertDialogConfirmar(
+                      //todo:(matias):Mandar todo al back
+                      ontap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
