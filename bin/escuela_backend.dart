@@ -1,13 +1,12 @@
 import 'dart:io';
 import 'dart:convert';
-
 import 'package:dotenv/dotenv.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:watcher/watcher.dart';
 import 'package:shelf_helmet/shelf_helmet.dart';
 
-import 'package:escuela_backend/utility/supabase/client_supabase.dart';
+import 'package:escuela_backend/repositories/repositories.dart';
 import 'package:escuela_backend/router/router.dart';
 
 void main(List<String> args) async {
@@ -40,7 +39,10 @@ void main(List<String> args) async {
   // For running in containers, we respect the PORT environment variable.
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
 
-  initsupabaseClient();
+  Repository.globalClient = SupabaseClient(
+    dotEnv['SUPABASE_URL']!,
+    dotEnv['SUPABASE_KEY']!,
+  );
 
   var server = await serve(handler, ip, port);
   print('Server listening on port ${server.port}');
