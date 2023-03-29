@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:dotenv/dotenv.dart' show DotEnv;
+import 'package:escuela_backend/utility/supabase/client_supabase.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
-import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_cors_headers/shelf_cors_headers.dart';
+
 import 'package:watcher/watcher.dart';
 import 'package:logger/logger.dart';
 
-import 'package:escuela_backend/utility/logger_middleware.dart';
-import 'package:escuela_backend/repositories/repositories.dart';
 import 'package:escuela_backend/router/router.dart';
 
 final logger = Logger();
@@ -31,6 +31,7 @@ void main(List<String> args) async {
 
   // Configure a pipeline that logs requests.
   final handler = Pipeline()
+      .addMiddleware(corsHeaders())
       .addMiddleware(logRequests())
       .addMiddleware((innerHandler) => (request) async {
             final contentType = request.headers['content-type'];
@@ -46,10 +47,7 @@ void main(List<String> args) async {
   // For running in containers, we respect the PORT environment variable.
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
 
-  Repository.globalClient = SupabaseClient(
-    dotEnv['SUPABASE_URL']!,
-    dotEnv['SUPABASE_KEY']!,
-  );
+  initsupabaseClient();
 
   var server = await serve(handler, ip, port);
   if (enviroment == 'prod') {

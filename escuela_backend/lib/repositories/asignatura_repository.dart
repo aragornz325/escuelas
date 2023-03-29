@@ -3,7 +3,7 @@ import 'package:shelf/shelf.dart';
 import 'base_repository.dart';
 
 class AsignaturaRepository extends Repository {
-  Future<Map> getAsignaturaById(idAsignatura) async {
+  Future<Map> getAsignaturaById({required String idAsignatura}) async {
     final response = await client
         .from('Asignatura')
         .select('*, docente(*)')

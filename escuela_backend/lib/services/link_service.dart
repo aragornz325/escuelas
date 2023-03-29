@@ -9,6 +9,7 @@ import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:escuela_backend/services/mailer_service.dart';
 import 'package:escuela_backend/repositories/link_repository.dart';
 
+import '../repositories/docente_repository.dart';
 import '../utility/mailer/mail.dart';
 
 class LinkService {
@@ -18,8 +19,9 @@ class LinkService {
   final _asignaturaRepository = AsignaturaRepository();
   final _cursoRepository = CursoRepository();
   final _linkRepository = LinkRepository();
+  final _docenteRepository = DocenteRepository();
 
-  Future<Map> sendAlumnosByAsignatura(String token) async {
+  Future<Map> sendAlumnosByToken(String token) async {
     final jwtVerify = JWT.verify(token, SecretKey(dotEnv['JWT_TOKEN']!));
     if (jwtVerify == false) {
       throw Exception('Token invalido');
@@ -31,11 +33,15 @@ class LinkService {
 
     final listaAlumnos =
         await _alumnosRepository.getAlumnosBash(cursoByAsignatura['alumnos']);
+    final docente = await _docenteRepository.getDocenteById(
+        idDocente: jwt.payload['docente']);
+    final asignatura = await _asignaturaRepository.getAsignaturaById(
+        idAsignatura: jwt.payload['asignatura']);
 
     return {
-      'idCurso': cursoByAsignatura['idCurso'],
-      'idDocente': jwt.payload['docente'],
-      'idAsignatura': jwt.payload['asignatura'],
+      'curso': cursoByAsignatura['nombre'],
+      'docente': docente['nombre'] + ' ' + docente['apellido'],
+      'asignatura': asignatura['nombre'],
       'alumnos': listaAlumnos,
       "alumnosCount": listaAlumnos.length
     };
@@ -47,8 +53,8 @@ class LinkService {
   //recibe un Id de asignatura
   Future<Map<String, String>> sendLinkCalificacion(
       {required String idAsignatura, required String periodo}) async {
-    final asignatura =
-        await _asignaturaRepository.getAsignaturaById(idAsignatura);
+    final asignatura = await _asignaturaRepository.getAsignaturaById(
+        idAsignatura: idAsignatura);
 
     final checkActivesLink =
         await _linkRepository.getLinkByDocenteAndPeriodoAndAsignatura(

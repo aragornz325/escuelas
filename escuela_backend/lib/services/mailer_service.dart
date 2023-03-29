@@ -61,10 +61,10 @@ class MailerService {
 
       final tableCalificaciones =
           '<table style="cellpadding: 5px"> <thead> <tr> <td> ASIGNATURA </td> <td> NOTA</td>  <tr></thead> <tbody> <tr> $listadoNotas </tr></tbody> </table>';
-      final mailHtmlFinal = _templates.mailcalificaciones(
+      final mailHtmlFinal = _templates.calificacionesSimple(
           nombre: element['nombre'],
           apellido: element['apellido'],
-          tableCalificaciones: tableCalificaciones);
+          notaTable: tableCalificaciones);
 
       await sendMailerFunction(
           mailDestinatario: mailDestinatario,
@@ -107,7 +107,7 @@ class MailerService {
       final mailHtmlFinal = _templates.calificacionesSimple(
           nombre: calificacionesEnviar[i]['nombre'],
           apellido: calificacionesEnviar[i]['apellido'],
-          notaTable: tableCalificaciones);
+          notaTable: _templates.tablaParaNico());
 
       await sendMailerFunction(
           mailDestinatario: mailDestinatario,

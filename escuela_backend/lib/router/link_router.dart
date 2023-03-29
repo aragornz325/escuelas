@@ -11,12 +11,14 @@ class LinkRouter {
   Router get router {
     final router = Router();
 
-    router.post('/<idAsignatura>', (Request request, String idAsignatura) {
-      return _linkController.sendLinkByAsignatura(request, idAsignatura);
+    router.post('/<idAsignatura>', (
+      Request request,
+    ) {
+      return _linkController.sendLinkByAsignatura(request);
     });
 
-    router.get('/<token>', (Request request, String token) {
-      return _linkController.sendAlumnosByAsignatura(request, token);
+    router.get('/<token>', (Request request) {
+      return _linkController.sendAlumnosByToken(request);
     });
 
     return router;

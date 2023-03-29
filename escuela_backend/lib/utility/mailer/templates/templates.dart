@@ -243,7 +243,7 @@ class Templates {
 		* {
 			box-sizing: border-box;
 		}
-
+  
 		body {
 			margin: 0;
 			padding: 0;
@@ -923,7 +923,7 @@ class Templates {
   mailcalificaciones(
       {required String nombre,
       required String apellido,
-      required String tableCalificaciones}) {
+      required String notaTable}) {
     return ''' <!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
 
@@ -1173,7 +1173,7 @@ class Templates {
 													<table class="html_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 														<tr>
 															<td class="pad">
-																<div style="font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;text-align:center;" align="center"><div style="margin: auto; "> ${tableCalificaciones} </div></div>
+																<div style="font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;text-align:center;" align="center"><div style="margin: auto; "> ${notaTable} </div></div>
 															</td>
 														</tr>
 													</table>
@@ -2256,5 +2256,161 @@ class Templates {
 </body>
 
 </html> ''';
+  }
+
+  tablaParaNico() {
+    return ''' <div>
+    <table style=" margin: 0 auto; text-align: center; border: #817fee77 solid;" >
+        <colgroup span="1" style="background-color: #ffffff00;"></colgroup>
+        <colgroup span="9" style="background-color: #ee84c577;"></colgroup>
+        <thead >
+          <tr>
+            <th ></th>
+            <th >Enero</th>
+            <th >Febrero</th>
+            <th >Marzo</th>
+            <th >Abril</th>
+            <th >Mayo</th>
+            <th >Junio</th>
+            <th >Julio</th>
+            <th >TEP</th>
+            <th >TED</th>
+            <!-- ... -->
+          </tr>
+        </thead>
+        <br>
+        <tbody style="border: solid;">
+            <br>
+            <tr style="border: dotted;">
+                <td style="border: dotted 1px;">Matemática</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+              <tr style="border: solid;">
+                <td style="border: dotted 1px;">Lengua</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+              <tr style="border: solid;">
+                <td style="border: dotted 1px;">Quimica</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+              <tr style="border: solid;">
+                <td style="border: dotted 1px;">Fisica</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+              <tr style="border: solid;">
+                <td style="border: dotted 1px;">Mecanografia</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+              <tr style="border: solid;">
+                <td style="border: dotted 1px;">Estenografia</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+              <tr style="border: solid;">
+                <td style="border: dotted 1px;">Economia Domestica</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+              <tr style="border: solid;">
+                <td style="border: dotted 1px;">Historia</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+              <tr style="border: solid;">
+                <td style="border: dotted 1px;">Geografia</td>
+                <td style="border: solid 1px;">8</td>
+                <td style="border: solid 1px;">6</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+                <td style="border: solid 1px;">9</td>
+
+                <!-- ... -->
+              </tr>
+          <!-- ... -->
+        </tbody>
+      </table>
+
+</div>''';
   }
 }
