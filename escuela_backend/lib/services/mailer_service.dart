@@ -1,14 +1,9 @@
 import 'dart:io';
-
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
 import 'package:dotenv/dotenv.dart';
 
 import 'package:escuela_backend/repositories/calificaciones_repository.dart';
-
 import 'package:escuela_backend/utility/mailer/templates/templates.dart';
 import 'package:escuela_backend/utility/mailer/mail.dart';
-import 'package:escuela_backend/services/link_service.dart';
 
 final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
 
@@ -80,21 +75,57 @@ class MailerService {
   }
 
   Future<String> sendMailByPeriodo({required String periodo}) async {
-    // final List data = await _linkService.getLinksByPeriodo(periodo);
+    final List data =
+        await _calificacionesRepository.getLinksByPeriodo(periodo);
 
-    // final List alert = [];
-    // for (int i = 0; i < data.length; i++) {
-    //   if (data[i].notasCargadas == false) {
-    //     alert.add(
-    //         'no se pueden enviar las notas porque el docente ${data[i].docente.nombre} ${data[i].docente.apellido} aun no envio las notas del periodo');
-    //   }
-    // }
-    // if (alert.isNotEmpty) {
-    //   throw Exception(alert);
-    // }
-    // final notasByPeriodo = await _calificacionesRepository
-    //     .getCalificacionesByPeriodo(periodo: periodo);
+    final List alert = [];
+    for (int i = 0; i < data.length; i++) {
+      if (data[i]["notasCargadas"] == false) {
+        alert.add(
+            'el profesor ${data[i]['Docente']["nombre"]} ${data[i]['Docente']["apellido"]} no cargo las notas del periodo $periodo');
+      }
+    }
+    if (alert.isNotEmpty) {
+      throw Exception(alert.join(' - '));
+    }
 
-    return 'ok';
+    final calificacionesEnviar = await _calificacionesRepository
+        .getCalificacionesByPeriodo(periodo: periodo);
+
+    for (int i = 0; i < calificacionesEnviar.length; i++) {
+      final mailDestinatario = calificacionesEnviar[i]['email'];
+      final subject =
+          'Notas de ${calificacionesEnviar[i]['nombre']} ${calificacionesEnviar[i]['apellido']} - curso: ${calificacionesEnviar[i]['curso']}';
+      final mailHtml =
+          '<h1>Notas de ${calificacionesEnviar[i]['nombre']} ${calificacionesEnviar[i]['apellido']}</h1>';
+      final listadoNotas = calificacionesEnviar[i]['notas'].map((nota) {
+        return ' <tr> <td style="border: solid"> ${nota['NombreAsignatura']} </td>  <td style="border: solid"> ${nota['nota']}</td></tr>';
+      }).join();
+
+      final tableCalificaciones =
+          '<h4> periodo ${calificacionesEnviar[i]['notas'][0]['periodo']} </h4><table style="cellpadding: 5px"> <thead> <tr> <td> ASIGNATURA </td> <td> NOTA</td>  <tr></thead> <tbody> <tr> $listadoNotas </tr></tbody> </table>';
+      final mailHtmlFinal = _templates.calificacionesSimple(
+          nombre: calificacionesEnviar[i]['nombre'],
+          apellido: calificacionesEnviar[i]['apellido'],
+          notaTable: tableCalificaciones);
+
+      await sendMailerFunction(
+          mailDestinatario: mailDestinatario,
+          subject: subject,
+          mailHtml: mailHtmlFinal);
+
+      const payload = {
+        'sentByMail': true,
+      };
+
+      final notasList = calificacionesEnviar[i]['notas'];
+
+      for (int i = 0; i < notasList.length; i++) {
+        final idNota = notasList[i]['idNota'];
+        await _calificacionesRepository.updateNota(
+            payload: payload, idNota: idNota);
+      }
+    }
+    return 'todo ok';
   }
 }

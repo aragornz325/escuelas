@@ -22,6 +22,7 @@ void main(List<String> args) async {
   final date = DateTime.now();
   final enviroment = dotEnv['ENVIROMENT'];
   // Agregar ruta para el endpoint raíz
+
   escuelasRouter.router.get('/', (Request request) {
     return Response.ok('server running ok at $date, enviroment: $enviroment');
   });

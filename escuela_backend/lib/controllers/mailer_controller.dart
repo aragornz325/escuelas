@@ -35,9 +35,9 @@ class MailerController {
     }
   }
 
-  Future<Response> sendMailByPeriodo(Request request, id) async {
+  Future<Response> sendMailByPeriodo(Request request) async {
     try {
-      final periodo = request.params['periodo'];
+      final periodo = request.url.queryParameters['periodo'];
       final response = await mailerService.sendMailByPeriodo(periodo: periodo!);
 
       final encodeResponse = jsonEncode(response);
