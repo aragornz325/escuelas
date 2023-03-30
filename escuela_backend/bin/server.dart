@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dotenv/dotenv.dart' show DotEnv;
 import 'package:escuela_backend/repositories/base_repository.dart';
 import 'package:escuela_backend/repositories/repositories.dart';
+import 'package:escuela_backend/utility/middlewares/cors.dart';
+import 'package:escuela_backend/utility/middlewares/middlewares.dart';
 import 'package:escuela_backend/utility/supabase/client_supabase.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
@@ -34,7 +36,7 @@ void main(List<String> args) async {
 
   // Configure a pipeline that logs requests.
   final handler = Pipeline()
-      .addMiddleware(corsHeaders())
+      .addMiddleware(Middlewares().corsMiddleware)
       .addMiddleware(logRequests())
       .addMiddleware((innerHandler) => (request) async {
             final contentType = request.headers['content-type'];

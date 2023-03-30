@@ -3,17 +3,19 @@ import 'dart:convert';
 
 import 'package:dotenv/dotenv.dart';
 import 'package:escuela_backend/repositories/repositories.dart';
+import 'package:escuela_backend/utility/middlewares/cors.dart';
+import 'package:escuela_backend/utility/middlewares/middlewares.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:watcher/watcher.dart';
 import 'package:shelf_helmet/shelf_helmet.dart';
+import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 
 import 'package:escuela_backend/utility/supabase/client_supabase.dart';
 import 'package:escuela_backend/router/router.dart';
 
 void main(List<String> args) async {
-  final dotEnv = await DotEnv(includePlatformEnvironment: true)
-    ..load();
+  final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
   final escuelasRouter = EscuelasRouter();
 
   // Agregar ruta para el endpoint raíz
@@ -23,10 +25,9 @@ void main(List<String> args) async {
   });
 
   final ip = InternetAddress.anyIPv4;
-
   // Configure a pipeline that logs requests.
   final handler = Pipeline()
-      .addMiddleware(helmet())
+      .addMiddleware(Middlewares().corsMiddleware)
       .addMiddleware(logRequests())
       .addMiddleware((innerHandler) => (request) async {
             final contentType = request.headers['content-type'];

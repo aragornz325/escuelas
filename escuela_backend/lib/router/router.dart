@@ -12,19 +12,11 @@ class EscuelasRouter {
   final _router = Router();
 
   EscuelasRouter() {
-    final userController = UserController();
-    final userRouter = UserRouter(userController);
-    final mailerController = MailerController();
-    final mailerRouter = MailerRouter(mailerController);
-    final linkController = LinkController();
-    final linkRouter = LinkRouter(linkController);
-    final calificacionController = CalificacionController();
-    final calificacionRouter = CalificacionRouter(calificacionController);
-
-    _router.mount('/api/users', userRouter.router);
-    _router.mount('/api/link', linkRouter.router);
-    _router.mount('/api/mailer', mailerRouter.router);
-    _router.mount('/api/calificacion', calificacionRouter.router);
+    _router.mount('/api/users', UserRouter(UserController()).router);
+    _router.mount('/api/link', LinkRouter(LinkController()).router);
+    _router.mount('/api/mailer', MailerRouter(MailerController()).router);
+    _router.mount('/api/calificacion',
+        CalificacionRouter(CalificacionController()).router);
   }
 
   Router get router => _router;
