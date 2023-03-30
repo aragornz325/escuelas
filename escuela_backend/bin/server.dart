@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:dotenv/dotenv.dart' show DotEnv;
+import 'package:escuela_backend/repositories/base_repository.dart';
+import 'package:escuela_backend/repositories/repositories.dart';
 import 'package:escuela_backend/utility/supabase/client_supabase.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
@@ -13,7 +15,8 @@ import 'package:escuela_backend/router/router.dart';
 
 final logger = Logger();
 void main(List<String> args) async {
-  final dotEnv = DotEnv(includePlatformEnvironment: true)..load();
+  final dotEnv = await DotEnv(includePlatformEnvironment: true)
+    ..load();
   final envFile = args.isNotEmpty ? '.env.${args[0]}' : '.env.dev';
   dotEnv.load([envFile]);
 
@@ -47,7 +50,10 @@ void main(List<String> args) async {
   // For running in containers, we respect the PORT environment variable.
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
 
-  initsupabaseClient();
+  Repository.globalClient = SupabaseClient(
+    dotEnv['SUPABASE_URL']!,
+    dotEnv['SUPABASE_KEY']!,
+  );
 
   var server = await serve(handler, ip, port);
   if (enviroment == 'prod') {

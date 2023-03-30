@@ -64,7 +64,8 @@ class MailerService {
       final mailHtmlFinal = _templates.calificacionesSimple(
           nombre: element['nombre'],
           apellido: element['apellido'],
-          notaTable: tableCalificaciones);
+          notaTable: tableCalificaciones,
+          periodo: element['notas'][0]['periodo']);
 
       await sendMailerFunction(
           mailDestinatario: mailDestinatario,
@@ -99,15 +100,16 @@ class MailerService {
       final mailHtml =
           '<h1>Notas de ${calificacionesEnviar[i]['nombre']} ${calificacionesEnviar[i]['apellido']}</h1>';
       final listadoNotas = calificacionesEnviar[i]['notas'].map((nota) {
-        return ' <tr> <td style="border: solid"> ${nota['NombreAsignatura']} </td>  <td style="border: solid"> ${nota['nota']}</td></tr>';
+        return ' <tr> <td style="border: dotted 1px"> ${nota['NombreAsignatura']} </td>  <td style="border: solid 1px; background-color: #2E75FF "> ${nota['nota']}</td></tr>';
       }).join();
 
       final tableCalificaciones =
-          '<h4> periodo ${calificacionesEnviar[i]['notas'][0]['periodo']} </h4><table style="cellpadding: 5px"> <thead> <tr> <td> ASIGNATURA </td> <td> NOTA</td>  <tr></thead> <tbody> <tr> $listadoNotas </tr></tbody> </table>';
+          '<h4> periodo ${calificacionesEnviar[i]['notas'][0]['periodo']} </h4><table style="cellpadding: 5px; margin: 0 auto; text-align: center; border: #817fee77 solid; "> <thead> <tr> <td> ASIGNATURA </td> <td> NOTA</td>  <tr></thead> <tbody> <tr> $listadoNotas </tr></tbody> </table>';
       final mailHtmlFinal = _templates.calificacionesSimple(
           nombre: calificacionesEnviar[i]['nombre'],
           apellido: calificacionesEnviar[i]['apellido'],
-          notaTable: _templates.tablaParaNico());
+          notaTable: tableCalificaciones,
+          periodo: calificacionesEnviar[i]['notas'][0]['periodo']);
 
       await sendMailerFunction(
           mailDestinatario: mailDestinatario,

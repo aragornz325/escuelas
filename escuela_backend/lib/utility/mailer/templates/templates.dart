@@ -229,8 +229,9 @@ class Templates {
   calificacionesSimple(
       {required String nombre,
       required String apellido,
-      required String notaTable}) {
-    return ''' <!DOCTYPE html>
+      required String notaTable,
+      required String periodo}) {
+    return '''<!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
 
 <head>
@@ -243,7 +244,7 @@ class Templates {
 		* {
 			box-sizing: border-box;
 		}
-  
+
 		body {
 			margin: 0;
 			padding: 0;
@@ -275,7 +276,7 @@ class Templates {
 			display: none;
 		}
 
-		@media (max-width:720px) {
+		@media (max-width:575px) {
 			.desktop_hide table.icons-inner {
 				display: inline-block !important;
 			}
@@ -324,8 +325,8 @@ class Templates {
 	</style>
 </head>
 
-<body style="background-color: #81D4DF; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
-	<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #81D4DF;">
+<body style="background-color: transparent; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+	<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: transparent;">
 		<tbody>
 			<tr>
 				<td>
@@ -333,14 +334,14 @@ class Templates {
 						<tbody>
 							<tr>
 								<td>
-									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; background-color: #ffffff; background-size: auto; width: 700px;" width="700">
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; background-size: auto; color: #000000; width: 555px;" width="555">
 										<tbody>
 											<tr>
 												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 55px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
 													<table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 														<tr>
 															<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
-																<div class="alignment" align="center" style="line-height:10px"><img src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/796840_780645/image%20%281%29.png" style="display: block; height: auto; border: 0; width: 175px; max-width: 100%;" width="175" alt="Image" title="Image"></div>
+																<div class="alignment" align="center" style="line-height:10px"><img src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/796840_780645/image%20%281%29.png" style="display: block; height: auto; border: 0; width: 139px; max-width: 100%;" width="139" alt="Image" title="Image"></div>
 															</td>
 														</tr>
 													</table>
@@ -374,11 +375,11 @@ class Templates {
 							</tr>
 						</tbody>
 					</table>
-					<table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #043d8a;">
+					<table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #043d8a; background-size: auto;">
 						<tbody>
 							<tr>
 								<td>
-									<table class="row-content" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 700px;" width="700">
+									<table class="row-content" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; background-size: auto; width: 555px;" width="555">
 										<tbody>
 											<tr>
 												<td class="column column-1" width="33.333333333333336%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -386,8 +387,8 @@ class Templates {
 														<tr>
 															<td class="pad">
 																<div style="font-family: Arial, sans-serif">
-																	<div class style="font-size: 12px; font-family: 'Nunito', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-																		<p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;"><span style="font-size:8px;"><strong>INSTITUCIÓN</strong></span></p>
+																	<div class style="font-size: 12px; font-family: 'Nunito', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 24px; color: #ffffff; line-height: 2;">
+																		<p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 32px;"><a href="https://www.colegioredemptorismissio.com/" target="_blank" style="text-decoration: underline;" rel="noopener"><span style="font-size:14px;"><strong>Institucion</strong></span></a></p>
 																	</div>
 																</div>
 															</td>
@@ -399,8 +400,8 @@ class Templates {
 														<tr>
 															<td class="pad">
 																<div style="font-family: Arial, sans-serif">
-																	<div class style="font-size: 12px; font-family: 'Nunito', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-																		<p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;"><span style="font-size:8px;"><strong><span style>INSCRIPCIONES</span></strong></span></p>
+																	<div class style="font-size: 12px; font-family: 'Nunito', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 24px; color: #ffffff; line-height: 2;">
+																		<p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 32px;"><a href="https://www.colegioredemptorismissio.com/planillas" target="_blank" style="text-decoration: underline;" rel="noopener"><span style="font-size:14px;"><strong>Inscripciones</strong></span></a></p>
 																	</div>
 																</div>
 															</td>
@@ -412,8 +413,8 @@ class Templates {
 														<tr>
 															<td class="pad">
 																<div style="font-family: Arial, sans-serif">
-																	<div class style="font-size: 12px; font-family: 'Nunito', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-																		<p dir="ltr" style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;"><span style="font-size:8px;"><strong>CONTACTO</strong></span></p>
+																	<div class style="font-size: 12px; font-family: 'Nunito', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 24px; color: #ffffff; line-height: 2;">
+																		<p dir="ltr" style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 28px;"><span style="font-size:14px;"><a href="mailto: secundariorm@gmail.com" target="_blank" style="text-decoration: underline;" rel="noopener">Contacto</a></span></p>
 																	</div>
 																</div>
 															</td>
@@ -427,11 +428,11 @@ class Templates {
 							</tr>
 						</tbody>
 					</table>
-					<table class="row row-3" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff;">
+					<table class="row row-3" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f0eded;">
 						<tbody>
 							<tr>
 								<td>
-									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 700px;" width="700">
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 555px;" width="555">
 										<tbody>
 											<tr>
 												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-top: 10px; vertical-align: middle; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -439,12 +440,11 @@ class Templates {
 														<tr>
 															<td class="pad" style="padding-bottom:5px;padding-left:45px;padding-right:45px;padding-top:15px;">
 																<div style="font-family: sans-serif">
-																	<div class style="font-size: 12px; font-family: 'Poppins', Arial, Helvetica, sans-serif; mso-line-height-alt: 21.6px; color: #000000; line-height: 1.8;">
-																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 36px;"><span style="font-size:20px;">${nombre} ${apellido}</span></p>
-																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 21.6px;">&nbsp;</p>
-																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 36px;"><span style="font-size:20px;">${notaTable}</span></p>
-																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 21.6px;">&nbsp;</p>
-																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 21.6px;">&nbsp;</p>
+																	<div class style="font-size: 12px; font-family: 'Poppins', Arial, Helvetica, sans-serif; mso-line-height-alt: 24px; color: #000000; line-height: 2;">
+																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 40px;"><span style="font-size:20px;">${nombre} ${apellido}</span></p>
+																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 40px;"><span style="font-size:20px;">${periodo}</span></p>
+																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 24px;">&nbsp;</p>
+																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 40px;"><span style="font-size:20px;">${notaTable}</span></p>
 																	</div>
 																</div>
 															</td>
@@ -462,26 +462,14 @@ class Templates {
 						<tbody>
 							<tr>
 								<td>
-									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 700px;" width="700">
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 555px;" width="555">
 										<tbody>
 											<tr>
 												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
 													<table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 														<tr>
 															<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
-																<div class="alignment" align="center" style="line-height:10px"><img class="big" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/796840_780645/banner-02%201.png" style="display: block; height: auto; border: 0; width: 700px; max-width: 100%;" width="700" alt="I'm an image" title="I'm an image"></div>
-															</td>
-														</tr>
-													</table>
-													<table class="text_block block-2" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-														<tr>
-															<td class="pad">
-																<div style="font-family: Arial, sans-serif">
-																	<div class style="font-size: 12px; font-family: 'Nunito', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #000000; line-height: 1.2;">
-																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;"><span style="font-size:8px;">Todos los derechos reservados © Nidus Development - Argentina</span></p>
-																		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;"><span style="font-size:8px;">Terms & conditions | Contact Us | Unsuscribe</span></p>
-																	</div>
-																</div>
+																<div class="alignment" align="center" style="line-height:10px"><img class="big" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/796840_780645/banner-02%201.png" style="display: block; height: auto; border: 0; width: 555px; max-width: 100%;" width="555" alt="I'm an image" title="I'm an image"></div>
 															</td>
 														</tr>
 													</table>
@@ -497,7 +485,7 @@ class Templates {
 						<tbody>
 							<tr>
 								<td>
-									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 700px;" width="700">
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 555px;" width="555">
 										<tbody>
 											<tr>
 												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -512,9 +500,9 @@ class Templates {
 														<tr>
 															<td class="pad">
 																<div style="font-family: sans-serif">
-																	<div class style="color: #C0C0C0; font-size: 12px; font-family: 'Poppins', Arial, Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; line-height: 1.2;">
-																		<p style="margin: 0; text-align: center; mso-line-height-alt: 14.399999999999999px;"><span style="font-size:8px;">Todos los derechos reservados © Nidus Development - Argentina</span></p>
-																		<p style="margin: 0; text-align: center; mso-line-height-alt: 9.6px;"><span style="font-size:8px;">Terms & conditions | Contact Us | Unsuscribe</span></p>
+																	<div class style="color: #C0C0C0; font-size: 12px; font-family: 'Poppins', Arial, Helvetica, sans-serif; mso-line-height-alt: 24px; line-height: 2;">
+																		<p style="margin: 0; text-align: center; mso-line-height-alt: 16px;"><span style="font-size:8px;">Todos los derechos reservados © Nidus Development - Argentina</span></p>
+																		<p style="margin: 0; text-align: center; mso-line-height-alt: 16px;"><span style="font-size:8px;">Terms & conditions | Contact Us | Unsuscribe</span></p>
 																	</div>
 																</div>
 															</td>
@@ -539,7 +527,7 @@ class Templates {
 						<tbody>
 							<tr>
 								<td>
-									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 700px;" width="700">
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 555px;" width="555">
 										<tbody>
 											<tr>
 												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -550,7 +538,12 @@ class Templates {
 																	<tr>
 																		<td class="alignment" style="vertical-align: middle; text-align: center;"><!--[if vml]><table align="left" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"><![endif]-->
 																			<!--[if !vml]><!-->
-																			
+																			<table class="icons-inner" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; margin-right: -4px; padding-left: 0px; padding-right: 0px;" cellpadding="0" cellspacing="0" role="presentation"><!--<![endif]-->
+																				<tr>
+																					<td style="vertical-align: middle; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;"><a href="https://www.designedwithbee.com/?utm_source=editor&utm_medium=bee_pro&utm_campaign=free_footer_link" target="_blank" style="text-decoration: none;"><img class="icon" alt="Designed with BEE" src="https://d1oco4z2z1fhwp.cloudfront.net/assets/bee.png" height="32" width="34" align="center" style="display: block; height: auto; margin: 0 auto; border: 0;"></a></td>
+																					<td style="font-family: 'Poppins', Arial, Helvetica, sans-serif; font-size: 15px; color: #9d9d9d; vertical-align: middle; letter-spacing: undefined; text-align: center;"><a href="https://www.designedwithbee.com/?utm_source=editor&utm_medium=bee_pro&utm_campaign=free_footer_link" target="_blank" style="color: #9d9d9d; text-decoration: none;">Designed with BEE</a></td>
+																				</tr>
+																			</table>
 																		</td>
 																	</tr>
 																</table>
